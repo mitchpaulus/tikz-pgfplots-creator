@@ -1,0 +1,126 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8">
+
+<title>Tikz Plot Generator</title>
+<meta name="description" content="The HTML5 Herald">
+<meta name="author" content="SitePoint">
+
+<!--<link rel="stylesheet" href="css/styles.css?v=1.0">-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+
+</head>
+
+<body>
+
+<a href="https://github.com/mitchpaulus"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+
+<p> This is a generator of basic tikz pgfplots.   </p>
+
+<h2>Add Axis</h2>
+<button data-bind="click: addAxis">Add New Axis</button>
+<div data-bind="foreach: axes">
+    <div>
+        <label>Include Grid?</label>  <input type="checkbox" data-bind="checked: allGrid">  </input>
+    </div>
+    <div>
+        <label>Hide all ticks?</label>  <input type="checkbox" data-bind="checked: hideAllTicks">  </input>
+    </div>
+</div>
+
+   <h2>Add Series</h2> 
+
+
+
+<h2>Final Output</h2>
+<div>
+    <textarea name="output" rows="20" cols="40" readonly data-bind="value: output"></textarea>
+</div>
+
+</body>
+
+<script> 
+
+
+
+
+
+
+var axis = function () {
+    var self = this;
+
+    self.allGrid = ko.observable(true);
+    self.hideAllTicks = ko.observable(true);
+
+    self.options = ko.computed(function () {
+            optionArray = [];
+
+            if (self.allGrid()) {
+            optionArray.push("grid")
+            }
+
+            if (self.hideAllTicks()) {
+            optionArray.push("ticks = none")
+            }
+
+            return optionArray;
+            }
+            )
+
+    
+    self.ToOutput = function () {
+        var output = "\\begin{axis}\r\n[\r\n";
+        
+        var addedOptions = self.options().reduce(function (accum, value, index, options) {
+                return accum + value + ",\r\n";
+                }, output )
+        return addedOptions + "]\r\n\\end{axis}\r\n"
+    };
+
+
+}
+
+
+var viewModel = function () {
+    
+    var self = this;
+    self.includeGrid = ko.observable(true);
+
+    self.axes = ko.observableArray([new axis()]);
+
+    self.series = ko.observableArray([]);
+
+    self.addAxis = function () {
+        self.axes.push(new axis());
+    };
+
+    var baseOutput = "\\begin{tikzplot}\r\n\\end{tikzplot}"
+
+    self.output = ko.computed(function () {
+
+            var outputSring = "\\begin{tikzplot}\r\n"
+
+            self.axes().map(function (axis) {
+                outputSring = outputSring + axis.ToOutput();
+                })
+
+            outputSring = outputSring + "\\end{tikzplot}\r\n"
+
+            self.axes().map(function (axis) {
+                });
+
+
+            return outputSring;
+            })
+
+}
+
+
+ko.applyBindings(new viewModel() );
+
+</script>
+
+</html>
