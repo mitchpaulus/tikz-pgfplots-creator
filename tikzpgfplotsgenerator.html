@@ -29,10 +29,24 @@
     <div>
         <label>Hide all ticks?</label>  <input type="checkbox" data-bind="checked: hideAllTicks">  </input>
     </div>
+    <div>
+        <label for="Set_Axis_Limits">Set Axis Limits</label><input type="checkbox" data-bind="checked: setAxisLimits"></input>
+
+        <div data-bind="visible: setAxisLimits">
+            <label>X Min</label> <input type="text" data-bind="textInput: xMin" >
+        </div>
+
+    </div>
 </div>
 
-   <h2>Add Series</h2> 
+<h2>Add Series</h2> 
+<button data-bind="click: addSeries">Add a Series From a File</button>
+<div data-bind="foreach: series">
+    <label>Column Separator</label> 
+    <select data-bind="options: delimiterOptions" size="1">
 
+    </select>
+</div>
 
 
 <h2>Final Output</h2>
@@ -42,85 +56,6 @@
 
 </body>
 
-<script> 
-
-
-
-
-
-
-var axis = function () {
-    var self = this;
-
-    self.allGrid = ko.observable(true);
-    self.hideAllTicks = ko.observable(true);
-
-    self.options = ko.computed(function () {
-            optionArray = [];
-
-            if (self.allGrid()) {
-            optionArray.push("grid")
-            }
-
-            if (self.hideAllTicks()) {
-            optionArray.push("ticks = none")
-            }
-
-            return optionArray;
-            }
-            )
-
-    
-    self.ToOutput = function () {
-        var output = "\\begin{axis}\r\n[\r\n";
-        
-        var addedOptions = self.options().reduce(function (accum, value, index, options) {
-                return accum + value + ",\r\n";
-                }, output )
-        return addedOptions + "]\r\n\\end{axis}\r\n"
-    };
-
-
-}
-
-
-var viewModel = function () {
-    
-    var self = this;
-    self.includeGrid = ko.observable(true);
-
-    self.axes = ko.observableArray([new axis()]);
-
-    self.series = ko.observableArray([]);
-
-    self.addAxis = function () {
-        self.axes.push(new axis());
-    };
-
-    var baseOutput = "\\begin{tikzplot}\r\n\\end{tikzplot}"
-
-    self.output = ko.computed(function () {
-
-            var outputSring = "\\begin{tikzplot}\r\n"
-
-            self.axes().map(function (axis) {
-                outputSring = outputSring + axis.ToOutput();
-                })
-
-            outputSring = outputSring + "\\end{tikzplot}\r\n"
-
-            self.axes().map(function (axis) {
-                });
-
-
-            return outputSring;
-            })
-
-}
-
-
-ko.applyBindings(new viewModel() );
-
-</script>
+<script src="tikzpgfplotsgenerator.js"></script>
 
 </html>
