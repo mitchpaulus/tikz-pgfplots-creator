@@ -8,7 +8,7 @@
 <meta name="description" content="The HTML5 Herald">
 <meta name="author" content="SitePoint">
 
-<!--<link rel="stylesheet" href="css/styles.css?v=1.0">-->
+<link rel="stylesheet" href="styles.css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
 
@@ -40,22 +40,32 @@
 </div>
 
 <h2>Add Series</h2> 
-<button data-bind="click: addSeries">Add a Series From a File</button>
-<div data-bind="foreach: series">
-    <label>Column Separator</label> 
-    <select data-bind="options: delimiterOptions" size="1">
-
-    </select>
+<button data-bind="click: addTableSeries">Add a Series From a File</button><button style="margin-left: 2em" data-bind="click: addMathSeries">Add a Series from Math Function</button>
+<div data-bind=" template: { foreach: series, name: seriesTemplateName } ">
 </div>
 
 
 <h2>Final Output</h2>
 <div>
-    <textarea name="output" rows="20" cols="40" readonly data-bind="value: output"></textarea>
+    <textarea name="output" rows="20" cols="72" readonly data-bind="value: output"></textarea>
 </div>
 
 </body>
 
 <script src="tikzpgfplotsgenerator.js"></script>
+
+<script type="text/html" id="math-expression" >
+<p>Math Expression.</p>
+</script>
+
+
+<script type="text/html" id="table" >
+<p>Table.</p>
+    <label>Column Separator</label> 
+    <select data-bind="options: delimiterOptions, value: delimiter" size="1">
+
+    </select>
+</script>
+
 
 </html>

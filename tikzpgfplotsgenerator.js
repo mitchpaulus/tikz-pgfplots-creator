@@ -6,18 +6,47 @@ var addPlotTable = function () {
     self.delimiter = ko.observable("");
 
 
+    self.options = [ self.delimiter]; 
+
     
     self.ToOutput = ko.computed(function () {
-        return "\\addplot[] table{filename};\r\n";
+        return "\\addplot[col sep=" + self.delimiter() + "] table{filename};\r\n";
     });
+
+    self.templateName = function () {
+        return "table";
+    };
 };
 
+
+var mathSeries = function () {
+    var self = this;
+
+
+
+    self.minDomain = ko.observable(0);
+    self.maxDomain = ko.observable(1);
+
+    self.samples = ko.observable(50);
+
+    self.expression = ko.observable("");
+
+    self.ToOutput = ko.computed(function () {
+        return "\\addplot[domain=" + self.minDomain() + ":" + self.maxDomain() + ", samples=" + self.samples() + "] {" + self.expression() + "};\r\n";
+    });
+
+    self.templateName = function () {
+        return "math-expression";
+    };
+
+};
 
 
 
 
 var axis = function () {
     var self = this;
+
 
     self.allGrid = ko.observable(true);
     self.hideAllTicks = ko.observable(true);
@@ -42,19 +71,17 @@ var axis = function () {
         }
 
         return optionArray;
-    }
-    )
+    });
 
 
-        self.ToOutput = function () {
-            var output = "\\begin{axis}\r\n[\r\n";
+    self.ToOutput = function () {
+        var output = "\\begin{axis}\r\n[\r\n";
 
-            var addedOptions = self.options().reduce(function (accum, value, index, options) {
-                return accum + '    ' + value + ",\r\n";
-            }, output )
-            return addedOptions + "]\r\n\\end{axis}\r\n"
-        };
-
+        var addedOptions = self.options().reduce(function (accum, value, index, options) {
+            return accum + '    ' + value + ",\r\n";
+        }, output )
+        return addedOptions + "]\r\n\\end{axis}\r\n"
+    };
 
 }
 
@@ -62,6 +89,11 @@ var axis = function () {
 var viewModel = function () {
 
     var self = this;
+
+    self.seriesTemplateName = function (series) {
+        return series.templateName();
+    }
+
     self.includeGrid = ko.observable(true);
 
     self.axes = ko.observableArray([new axis()]);
@@ -72,37 +104,41 @@ var viewModel = function () {
         self.axes.push(new axis());
     };
 
-    self.addSeries = function () {
+    self.addTableSeries = function () {
         self.series.push(new addPlotTable());
     };
 
-    var baseOutput = "\\begin{tikzplot}\r\n\\end{tikzplot}"
+    self.addMathSeries = function () {
+        self.series.push(new mathSeries());
+    };
 
-        self.output = ko.computed(function () {
+    var baseOutput = "\\begin{tikzplot}\r\n\\end{tikzplot}";
 
-            var outputSring = "\\begin{tikzplot}\r\n"
+    self.output = ko.computed(function () {
 
-            self.axes().map(function (axis) {
-                outputSring = outputSring + axis.ToOutput();
-            })
+        var outputSring = "\\begin{tikzplot}\r\n";
 
-            self.series().map(function (serie) {
-                outputSring = outputSring + serie.ToOutput();
-            })
+        self.axes().map(function (axis) {
+            outputSring = outputSring + axis.ToOutput();
+        });
+
+        self.series().map(function (serie) {
+            outputSring = outputSring + serie.ToOutput();
+        });
 
 
-        outputSring = outputSring + "\\end{tikzplot}\r\n"
+        outputSring = outputSring + "\\end{tikzplot}\r\n";
 
-            self.axes().map(function (axis) {
-            });
+        self.axes().map(function (axis) {
+        });
 
 
         return outputSring;
-        })
+    });
 
 }
 
 
-ko.applyBindings(new viewModel() );
+ko.applyBindings(new viewModel());
 
 
