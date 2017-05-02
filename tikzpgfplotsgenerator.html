@@ -24,18 +24,33 @@
 <button data-bind="click: addAxis">Add New Axis</button>
 <div data-bind="foreach: axes">
     <div>
-        <label>Include Grid?</label>  <input type="checkbox" data-bind="checked: allGrid">  </input>
+        <label data-bind="attr:{for: 'axis-grid-' + $index()}">Include Grid?</label>  
+        <input type="checkbox" data-bind="checked: allGrid, attr: {id: 'axis-grid-' + $index()}">  </input>
     </div>
     <div>
-        <label>Hide all ticks?</label>  <input type="checkbox" data-bind="checked: hideAllTicks">  </input>
+        <label  data-bind="attr:{for: 'axis-ticks' + $index()}">Hide all ticks?</label> 
+        <input type="checkbox" data-bind="checked: hideAllTicks, attr:{id: 'axis-ticks' + $index()}">  </input>
     </div>
     <div>
-        <label for="Set_Axis_Limits">Set Axis Limits</label><input type="checkbox" data-bind="checked: setAxisLimits"></input>
+        <label data-bind="attr:{for: 'set-axis-limits' + $index()}">Set Axis Limits</label>
+        <input type="checkbox" data-bind="checked: setAxisLimits, attr:{id: 'set-axis-limits' + $index()}"></input>
 
         <div data-bind="visible: setAxisLimits">
-            <label>X Min</label> <input type="text" data-bind="textInput: xMin" >
+            <label>X Min</label> <input type="search" data-bind="textInput: xMin" >
+            <label>X Max</label> <input type="search" data-bind="textInput: xMax" >
+            <label>Y Min</label> <input type="search" data-bind="textInput: yMin" >
+            <label>Y Max</label> <input type="search" data-bind="textInput: yMax" >
         </div>
 
+    </div>
+        <h3> Label Styles </h3>
+
+    <div> 
+        <label>Set position on the axis in axis coordinates </label> <input type="checkbox" data-bind="checked: styleXLabel"> </input>
+    </div>
+    <div data-bind="visible: styleXLabel">
+        <label>x label x-position</label><input type="search" data-bind="textInput: xLabelXLocation"> 
+        <label>x label y-position</label> </input><input type="search" data-bind="textInput: xLabelYLocation"></input>
     </div>
 </div>
 
@@ -55,12 +70,14 @@
 <script src="tikzpgfplotsgenerator.js"></script>
 
 <script type="text/html" id="math-expression" >
+<label>Math expression:</label> <input type="search" data-bind="textInput: expression"></input>
+
 <p>Math Expression.</p>
 </script>
 
 
 <script type="text/html" id="table" >
-<p>Table.</p>
+<p>Select the column separator. Default is space.</p>
     <label>Column Separator</label> 
     <select data-bind="options: delimiterOptions, value: delimiter" size="1">
 

@@ -1,4 +1,4 @@
-var delimiterOptions = ["comma", "tab"]
+var delimiterOptions = ["space", "tab", "comma", "colon", "semicolon","braces","&","ampersand"]
 
 var addPlotTable = function () {
     var self = this;
@@ -29,7 +29,7 @@ var mathSeries = function () {
 
     self.samples = ko.observable(50);
 
-    self.expression = ko.observable("");
+    self.expression = ko.observable("x+1");
 
     self.ToOutput = ko.computed(function () {
         return "\\addplot[domain=" + self.minDomain() + ":" + self.maxDomain() + ", samples=" + self.samples() + "] {" + self.expression() + "};\r\n";
@@ -52,8 +52,17 @@ var axis = function () {
     self.hideAllTicks = ko.observable(true);
 
     self.xMin = ko.observable("0");
+    self.xMax = ko.observable("1");
+    self.yMin = ko.observable("0");
+    self.yMax = ko.observable("1");
 
     self.setAxisLimits = ko.observable(false);
+
+    self.styleXLabel = ko.observable(false);
+    self.xLabelXLocation = ko.observable("0.5");
+    self.xLabelYLocation = ko.observable("-0.1");
+
+    self.styleYLabel = ko.observable(false);
 
     self.options = ko.computed(function () {
         optionArray = [];
@@ -68,6 +77,13 @@ var axis = function () {
 
         if (self.setAxisLimits()) {
             optionArray.push("xmin=" + self.xMin())
+            optionArray.push("xmax=" + self.xMax())
+            optionArray.push("ymin=" + self.yMin())
+            optionArray.push("ymax=" + self.yMax())
+        }
+
+        if (self.styleXLabel()) {
+            optionArray.push(`x label style={at{(axis description cs:${self.xLabelXLocation()},${self.xLabelYLocation()})}}`);
         }
 
         return optionArray;
