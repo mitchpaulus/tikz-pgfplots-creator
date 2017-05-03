@@ -43,21 +43,26 @@
         </div>
 
     </div>
-        <h3> Label Styles </h3>
+    <h3> Label Styles </h3>
 
     <div> 
-        <label>Set position on the axis in axis coordinates </label> <input type="checkbox" data-bind="checked: styleXLabel"> </input>
+        <label data-bind="attr:{for: 'axis-label-pos' + $index()}">Set position on the axis in axis coordinates </label> <input type="checkbox" data-bind="checked: styleXLabel, attr:{id: 'axis-label-pos' + $index()}"> </input>
     </div>
     <div data-bind="visible: styleXLabel">
         <label>x label x-position</label><input type="search" data-bind="textInput: xLabelXLocation"> 
         <label>x label y-position</label> </input><input type="search" data-bind="textInput: xLabelYLocation"></input>
     </div>
+
+
+    <h2>Add Series</h2> 
+    <button data-bind="click: addTableSeries">Add a Series From a File</button><button style="margin-left: 2em" data-bind="click: addMathSeries">Add a Series from Math Function</button>
+    <div data-bind=" template: { foreach: plots, name: seriesTemplateName } ">
+    </div>
+
+
+
 </div>
 
-<h2>Add Series</h2> 
-<button data-bind="click: addTableSeries">Add a Series From a File</button><button style="margin-left: 2em" data-bind="click: addMathSeries">Add a Series from Math Function</button>
-<div data-bind=" template: { foreach: series, name: seriesTemplateName } ">
-</div>
 
 
 <h2>Final Output</h2>
@@ -70,18 +75,28 @@
 <script src="tikzpgfplotsgenerator.js"></script>
 
 <script type="text/html" id="math-expression" >
+<div>
 <label>Math expression:</label> <input type="search" data-bind="textInput: expression"></input>
-
+<button data-bind="click: $parent.removePlot">Remove Plot</button>
 <p>Math Expression.</p>
+</div>
 </script>
 
 
 <script type="text/html" id="table" >
+<div>
 <p>Select the column separator. Default is space.</p>
     <label>Column Separator</label> 
     <select data-bind="options: delimiterOptions, value: delimiter" size="1">
 
     </select>
+    <label>Marker Type:</label> 
+    <select data-bind="options: markOptions, value: mark" size="1">
+
+    </select>
+<label>File name: </label> <input data-bind="textInput: filename"></input>
+<button data-bind="click: $parent.removePlot">Remove Plot</button>
+</div>
 </script>
 
 

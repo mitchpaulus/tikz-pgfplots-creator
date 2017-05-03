@@ -1,16 +1,47 @@
-var delimiterOptions = ["space", "tab", "comma", "colon", "semicolon","braces","&","ampersand"]
+const delimiterOptions = ["space", "tab", "comma", "colon", "semicolon","braces","&","ampersand"]
+const markOptions = ["no marks", "*", "x", "+", "-", "|", "o",
+      "asterisk", "star", "10-pointed-star","oplus","oplus*",
+      "otimes","otimes*","square","square*","triangle","triangle*",
+      "diamond","diamond*","halfdiamond*","halfsquare*",
+      "halfsquare right*", "halfsquare left*","Mercedes star", "Mercedes star flipped",
+      "halfcircle", "halfcircle*", "pentagon",
+      "pentagon*", "cube", "cube*"]
 
 var addPlotTable = function () {
     var self = this;
 
     self.delimiter = ko.observable("");
+    self.mark = ko.observable("");
 
+    self.filename = ko.observable("samplefile.csv");
 
-    self.options = [ self.delimiter]; 
+    self.options = ko.computed(function () {
+        var optionArray = [];
 
+        if (self.mark() == "" || self.mark() === "no marks"){
+            optionArray.push("no marks");
+        }
+        else {
+            optionArray.push(`mark=${self.mark()}`)
+        }
+
+        optionArray.push("col sep=" + self.delimiter());
+
+        return optionArray;
     
+    }); 
+    
+
     self.ToOutput = ko.computed(function () {
-        return "\\addplot[col sep=" + self.delimiter() + "] table{filename};\r\n";
+
+        var output = "\\addplot[";
+
+        var addedOptions = self.options().reduce(function (accum, value, index, options) {
+            return accum + value + ", ";
+        }, output );
+
+        return `${addedOptions}] table{${self.filename()}};\r\n`;
+        //return "\\addplot[col sep=" + self.delimiter() + "] table{filename};\r\n";
     });
 
     self.templateName = function () {
@@ -48,8 +79,27 @@ var axis = function () {
     var self = this;
 
 
-    self.allGrid = ko.observable(true);
-    self.hideAllTicks = ko.observable(true);
+    self.plots = ko.observableArray([]);
+
+    self.addTableSeries = function () {
+        self.plots.push(new addPlotTable());
+    };
+
+    self.addMathSeries = function () {
+        self.plots.push(new mathSeries());
+    };
+
+    self.seriesTemplateName = function (plot) {
+        return plot.templateName();
+    }
+
+
+    self.removePlot = function (plot) {
+        self.plots.remove(plot);
+    };
+
+    self.allGrid = ko.observable(false);
+    self.hideAllTicks = ko.observable(false);
 
     self.xMin = ko.observable("0");
     self.xMax = ko.observable("1");
@@ -95,8 +145,15 @@ var axis = function () {
 
         var addedOptions = self.options().reduce(function (accum, value, index, options) {
             return accum + '    ' + value + ",\r\n";
-        }, output )
-        return addedOptions + "]\r\n\\end{axis}\r\n"
+        }, output );
+
+        addedOptions = addedOptions + "]\r\n";
+
+        self.plots().map(function (plot) {
+            addedOptions = addedOptions + plot.ToOutput();
+        });
+
+        return addedOptions + "\r\n\\end{axis}\r\n"
     };
 
 }
@@ -106,27 +163,18 @@ var viewModel = function () {
 
     var self = this;
 
-    self.seriesTemplateName = function (series) {
-        return series.templateName();
-    }
 
     self.includeGrid = ko.observable(true);
 
     self.axes = ko.observableArray([new axis()]);
 
-    self.series = ko.observableArray([]);
+    //self.series = ko.observableArray([]);
 
     self.addAxis = function () {
         self.axes.push(new axis());
     };
 
-    self.addTableSeries = function () {
-        self.series.push(new addPlotTable());
-    };
 
-    self.addMathSeries = function () {
-        self.series.push(new mathSeries());
-    };
 
     var baseOutput = "\\begin{tikzplot}\r\n\\end{tikzplot}";
 
@@ -138,9 +186,9 @@ var viewModel = function () {
             outputSring = outputSring + axis.ToOutput();
         });
 
-        self.series().map(function (serie) {
-            outputSring = outputSring + serie.ToOutput();
-        });
+        //self.series().map(function (serie) {
+         //   outputSring = outputSring + serie.ToOutput();
+        //});
 
 
         outputSring = outputSring + "\\end{tikzplot}\r\n";
