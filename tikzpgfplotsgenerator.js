@@ -19,13 +19,31 @@ var commonPlotOptions = function () {
     var self = this;
 
     self.color = ko.observable("black");
+    self.mark = ko.observable("");
+
+    self.makeSmooth = ko.observable(false);
 
     self.commonPlotOptionArray = ko.computed(function () {
+        var optionArray = [];
+
 
         if (self.color()) {
-            return [self.color()];
+            optionArray.push(self.color());
         }
-        return [];
+
+        if (self.mark() == "" || self.mark() === "no marks"){
+            optionArray.push("no marks");
+        }
+        else {
+            optionArray.push(`mark=${self.mark()}`)
+        }
+
+
+        if (self.makeSmooth()) {
+            optionArray.push("smooth");
+        }
+
+        return optionArray;
     });
 
 }
@@ -35,7 +53,6 @@ var addPlotTable = function () {
     var self = this;
 
     self.delimiter = ko.observable("");
-    self.mark = ko.observable("");
 
     self.filename = ko.observable("samplefile.csv");
 
@@ -45,16 +62,7 @@ var addPlotTable = function () {
     self.options = ko.computed(function () {
         var optionArray = [];
 
-        if (self.mark() == "" || self.mark() === "no marks"){
-            optionArray.push("no marks");
-        }
-        else {
-            optionArray.push(`mark=${self.mark()}`)
-        }
-
         optionArray.push("col sep=" + self.delimiter());
-
-        optionArray.push(self.commonPlotOptions.commonPlotOptionArray());
 
         return optionArray;
     
@@ -65,11 +73,24 @@ var addPlotTable = function () {
 
         var output = "\\addplot[";
 
-        var addedOptions = self.options().reduce(function (accum, value, index, options) {
-            return accum + value + ", ";
+        var addedOptions = self.commonPlotOptions.commonPlotOptionArray().reduce(function (accum, value, index, options) {
+            if (index === self.commonPlotOptions.commonPlotOptionArray().length-1){
+                return accum + value;
+            } else {
+                return accum + value + ", ";
+            }
         }, output );
 
-        return `${addedOptions}] table{${self.filename()}};\r\n`;
+        var tableSpecificOptions = self.options().reduce(function (accum, value, index, options) {
+            if (index === self.options().length-1){
+                return accum + value;
+            } else {
+                return accum + value + ", ";
+            }
+            return accum + value + ", ";
+        }, "" );
+
+        return `${addedOptions}] table[${tableSpecificOptions}]{${self.filename()}};\r\n`;
         //return "\\addplot[col sep=" + self.delimiter() + "] table{filename};\r\n";
     });
 

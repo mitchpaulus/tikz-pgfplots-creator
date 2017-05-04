@@ -74,6 +74,16 @@
 
 <script src="tikzpgfplotsgenerator.js"></script>
 
+<script type="text/html" charset="utf-8" id="base-plot-options">
+<div>
+<label>Color: </label> <select data-bind="options: colorOptions, value: commonPlotOptions.color" size="1"></select>
+    <label>Marker Type:</label> 
+    <select data-bind="options: markOptions, value: commonPlotOptions.mark" size="1"></select>
+<label>Smooth Plot?</label> <input type="checkbox" name="smooth-plot" id="smooth-plot" data-bind="checked: commonPlotOptions.makeSmooth">
+</div>
+</script>
+
+
 <script type="text/html" id="math-expression" >
 <div>
 <label>Math expression:</label> <input type="search" data-bind="textInput: expression"></input>
@@ -84,19 +94,19 @@
 
 
 <script type="text/html" id="table" >
+<div data-bind="template:{name:'base-plot-options'}">
+    
+</div>
 <div>
 <p>Select the column separator. Default is space.</p>
     <label>Column Separator</label> 
     <select data-bind="options: delimiterOptions, value: delimiter" size="1">
 
     </select>
-    <label>Marker Type:</label> 
-    <select data-bind="options: markOptions, value: mark" size="1">
 
     </select>
 <label>File name: </label> <input data-bind="textInput: filename"></input>
 
-<label>Color: </label> <select data-bind="options: colorOptions, value: commonPlotOptions.color" size="1"></select>
 
 <button data-bind="click: $parent.removePlot">Remove Plot</button>
 </div>
