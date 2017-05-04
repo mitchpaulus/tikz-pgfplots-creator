@@ -2,5 +2,10 @@ button {
     padding: 1em;
     background-color: #800000;
     color: white;
+    cursor: pointer;
+}
+
+.plot {
+    margin-top: 15px;
 }
 

@@ -23,6 +23,11 @@
 <h2>Add Axis</h2>
 <button data-bind="click: addAxis">Add New Axis</button>
 <div data-bind="foreach: axes">
+<div>
+    <label>X Label</label> <input data-bind="textInput: xLabel" type="text"> </input>
+    <label>Y Label</label> <input data-bind="textInput: yLabel" type="text"> </input>
+</div>
+
     <div>
         <label data-bind="attr:{for: 'axis-grid-' + $index()}">Include Grid?</label>  
         <input type="checkbox" data-bind="checked: allGrid, attr: {id: 'axis-grid-' + $index()}">  </input>
@@ -53,6 +58,15 @@
         <label>x label y-position</label> </input><input type="search" data-bind="textInput: xLabelYLocation"></input>
     </div>
 
+    <div> 
+        <label data-bind="attr:{for: 'rotate-y-axis' + $index()}">Rotate Y-Axis Label?</label> <input type="checkbox" data-bind="checked: rotateYAxis, attr:{id: 'rotate-y-axis' + $index()}"> </input> 
+        <label data-bind="visible: rotateYAxis">Rotation angle:</label> <input type="text" data-bind="visible: rotateYAxis,  textInput: rotateYAxisAngle" ></input>
+    </div>
+
+    <div>
+        <label for="use-non-box-axis-lines">Use non box axis?</label><input id="use-non-box-axis-lines" type="checkbox" data-bind="checked: useNonBoxAxis">
+        <select data-bind="visible: useNonBoxAxis, options: lineSettingOptions, value: axisLineSetting"> </select>
+    </div>
 
     <h2>Add Series</h2> 
     <button data-bind="click: addTableSeries">Add a Series From a File</button><button style="margin-left: 2em" data-bind="click: addMathSeries">Add a Series from Math Function</button>
@@ -75,11 +89,11 @@
 <script src="tikzpgfplotsgenerator.js"></script>
 
 <script type="text/html" charset="utf-8" id="base-plot-options">
-<div>
+<div class="plot">
 <label>Color: </label> <select data-bind="options: colorOptions, value: commonPlotOptions.color" size="1"></select>
     <label>Marker Type:</label> 
     <select data-bind="options: markOptions, value: commonPlotOptions.mark" size="1"></select>
-<label>Smooth Plot?</label> <input type="checkbox" name="smooth-plot" id="smooth-plot" data-bind="checked: commonPlotOptions.makeSmooth">
+<label data-bind="attr:{for: 'smooth'+$index()}">Smooth Plot?</label> <input type="checkbox" name="smooth-plot" data-bind="attr:{id: 'smooth'+$index()},checked: commonPlotOptions.makeSmooth">
 </div>
 </script>
 

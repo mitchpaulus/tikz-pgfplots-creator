@@ -13,6 +13,10 @@ const colorOptions = [
     "lime","olive","orange","pink","purple",
     "teal","violet"];
 
+const lineSettingOptions = [
+    "box","left","middle","center","right","none"
+];
+
 
 var commonPlotOptions = function () {
 
@@ -143,6 +147,8 @@ var axis = function () {
         return plot.templateName();
     }
 
+    self.rotateYAxis = ko.observable(false);
+    self.rotateYAxisAngle = ko.observable("-90");
 
     self.removePlot = function (plot) {
         self.plots.remove(plot);
@@ -150,6 +156,10 @@ var axis = function () {
 
     self.allGrid = ko.observable(false);
     self.hideAllTicks = ko.observable(false);
+
+
+    self.yLabel = ko.observable("y");
+    self.xLabel = ko.observable("x");
 
     self.xMin = ko.observable("0");
     self.xMax = ko.observable("1");
@@ -164,8 +174,16 @@ var axis = function () {
 
     self.styleYLabel = ko.observable(false);
 
+    self.useNonBoxAxis = ko.observable(false);
+    self.axisXLineSetting = ko.observable("box");
+    self.axisYLineSetting = ko.observable("box");
+    self.axisLineSetting = ko.observable("box");
+    
     self.options = ko.computed(function () {
         optionArray = [];
+
+        optionArray.push("x label={" + self.xLabel() + "}");
+        optionArray.push("y label={" + self.yLabel() + "}");
 
         if (self.allGrid()) {
             optionArray.push("grid")
@@ -184,6 +202,14 @@ var axis = function () {
 
         if (self.styleXLabel()) {
             optionArray.push(`x label style={at{(axis description cs:${self.xLabelXLocation()},${self.xLabelYLocation()})}}`);
+        }
+
+        if (self.rotateYAxis()) {
+            optionArray.push("y label style={rotate=" + self.rotateYAxisAngle() + "}");
+        }
+
+        if (self.useNonBoxAxis()) {
+            optionArray.push("axis lines=" + self.axisLineSetting());
         }
 
         return optionArray;
