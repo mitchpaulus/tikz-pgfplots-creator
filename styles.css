@@ -5,6 +5,15 @@ button {
     cursor: pointer;
 }
 
+body {
+    font-family: Verdana;
+}
+
+textarea {
+    font-family: monospace;
+}
+
+
 .plot {
     margin-top: 15px;
 }

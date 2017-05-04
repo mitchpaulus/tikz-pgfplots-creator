@@ -251,12 +251,14 @@ var viewModel = function () {
     };
 
 
-
     //var baseOutput = "\\begin{tikzpicture}\r\n\\end{tikzplot}";
+    self.preambleOutput = ko.computed(function () {
+        return  "%% Some packages you will need\r\n" +  "\\usepackage{tikz}\r\n\\usepackage{pgfplots}\r\n\r\n";
+    });
+
 
     self.output = ko.computed(function () {
-
-        var outputSring = "\\begin{tikzpicture}\r\n";
+        var outputSring =  "\\begin{tikzpicture}\r\n";
 
         self.axes().map(function (axis) {
             outputSring = outputSring + axis.ToOutput();
