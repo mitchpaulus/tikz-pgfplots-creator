@@ -1,11 +1,35 @@
-const delimiterOptions = ["space", "tab", "comma", "colon", "semicolon","braces","&","ampersand"]
+const delimiterOptions = ["space", "tab", "comma", "colon", "semicolon","braces","&","ampersand"];
 const markOptions = ["no marks", "*", "x", "+", "-", "|", "o",
       "asterisk", "star", "10-pointed-star","oplus","oplus*",
       "otimes","otimes*","square","square*","triangle","triangle*",
       "diamond","diamond*","halfdiamond*","halfsquare*",
       "halfsquare right*", "halfsquare left*","Mercedes star", "Mercedes star flipped",
       "halfcircle", "halfcircle*", "pentagon",
-      "pentagon*", "cube", "cube*"]
+      "pentagon*", "cube", "cube*"];
+const colorOptions = [
+"red", "green","blue","cyan",
+    "magenta","yellow","black","gray",
+    "white","darkgray","lightgray","brown",
+    "lime","olive","orange","pink","purple",
+    "teal","violet"];
+
+
+var commonPlotOptions = function () {
+
+    var self = this;
+
+    self.color = ko.observable("black");
+
+    self.commonPlotOptionArray = ko.computed(function () {
+
+        if (self.color()) {
+            return [self.color()];
+        }
+        return [];
+    });
+
+}
+
 
 var addPlotTable = function () {
     var self = this;
@@ -14,6 +38,9 @@ var addPlotTable = function () {
     self.mark = ko.observable("");
 
     self.filename = ko.observable("samplefile.csv");
+
+    self.commonPlotOptions = new commonPlotOptions();
+
 
     self.options = ko.computed(function () {
         var optionArray = [];
@@ -26,6 +53,8 @@ var addPlotTable = function () {
         }
 
         optionArray.push("col sep=" + self.delimiter());
+
+        optionArray.push(self.commonPlotOptions.commonPlotOptionArray());
 
         return optionArray;
     
@@ -53,7 +82,7 @@ var addPlotTable = function () {
 var mathSeries = function () {
     var self = this;
 
-
+    self.commonPlotOptions = new commonPlotOptions();
 
     self.minDomain = ko.observable(0);
     self.maxDomain = ko.observable(1);
@@ -176,11 +205,11 @@ var viewModel = function () {
 
 
 
-    var baseOutput = "\\begin{tikzplot}\r\n\\end{tikzplot}";
+    //var baseOutput = "\\begin{tikzpicture}\r\n\\end{tikzplot}";
 
     self.output = ko.computed(function () {
 
-        var outputSring = "\\begin{tikzplot}\r\n";
+        var outputSring = "\\begin{tikzpicture}\r\n";
 
         self.axes().map(function (axis) {
             outputSring = outputSring + axis.ToOutput();
@@ -191,7 +220,7 @@ var viewModel = function () {
         //});
 
 
-        outputSring = outputSring + "\\end{tikzplot}\r\n";
+        outputSring = outputSring + "\\end{tikzpicture}\r\n";
 
         self.axes().map(function (axis) {
         });

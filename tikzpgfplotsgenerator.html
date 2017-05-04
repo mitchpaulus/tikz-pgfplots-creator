@@ -95,6 +95,9 @@
 
     </select>
 <label>File name: </label> <input data-bind="textInput: filename"></input>
+
+<label>Color: </label> <select data-bind="options: colorOptions, value: commonPlotOptions.color" size="1"></select>
+
 <button data-bind="click: $parent.removePlot">Remove Plot</button>
 </div>
 </script>
