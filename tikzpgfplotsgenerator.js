@@ -37,6 +37,20 @@ tikzgen.defaultText,
     "dashdotdotted", "densely dashdotdotted", "loosely dashdotdotted"
 ]
 
+
+const addLegendEntryLine = function(originalText, addLegendEntryBool, legendEntryText)  {
+    if (ko.utils.unwrapObservable(addLegendEntryBool)) {
+        const legendText = originalText + "\\addlegendentry{" + ko.utils.unwrapObservable(legendEntryText) + "}\r\n\r\n";
+        if (ko.utils.unwrapObservable(originalText).endsWith("\r\n")) {
+            return legendText;
+        }
+        else {
+            return "\r\n" + legendText;
+        }
+    }
+    return originalText;
+}
+
 var commonPlotOptions = function () {
 
     var self = this;
@@ -47,6 +61,9 @@ var commonPlotOptions = function () {
     self.makeSmooth = ko.observable(false);
 
     self.lineStyle = ko.observable(lineStyleOptions[0]);
+
+    self.addLegendEntry = ko.observable(false);
+    self.legendEntry = ko.observable("y1");
 
     self.commonPlotOptionArray = ko.computed(function () {
         var optionArray = [];
@@ -70,7 +87,6 @@ var commonPlotOptions = function () {
         if (self.lineStyle() !== lineStyleOptions[0]) {
             optionArray.push(self.lineStyle());
         }
-
 
         return optionArray;
     });
@@ -119,7 +135,9 @@ var addPlotTable = function () {
             return accum + value + ", ";
         }, "" );
 
-        return `${addedOptions}] table[${tableSpecificOptions}]{${self.filename()}};\r\n`;
+        var firstPlotLine =  `${addedOptions}] table[${tableSpecificOptions}]{${self.filename()}};\r\n`;
+
+        return addLegendEntryLine(firstPlotLine, self.commonPlotOptions.addLegendEntry(), self.commonPlotOptions.legendEntry());
         //return "\\addplot[col sep=" + self.delimiter() + "] table{filename};\r\n";
     });
 
@@ -142,7 +160,8 @@ var mathSeries = function () {
     self.expression = ko.observable("x+1");
 
     self.ToOutput = ko.computed(function () {
-        return "\\addplot[domain=" + self.minDomain() + ":" + self.maxDomain() + ", samples=" + self.samples() + "] {" + self.expression() + "};\r\n";
+        var firstLine = "\\addplot[domain=" + self.minDomain() + ":" + self.maxDomain() + ", samples=" + self.samples() + "] {" + self.expression() + "};\r\n";
+        return addLegendEntryLine(firstLine, self.commonPlotOptions.addLegendEntry(), self.commonPlotOptions.legendEntry()); 
     });
 
     self.templateName = function () {
@@ -179,7 +198,7 @@ var axis = function () {
         self.plots.remove(plot);
     };
 
-    self.allGrid = ko.observable(false);
+    self.allGrid      = ko.observable(false);
     self.hideAllTicks = ko.observable(false);
 
 
@@ -193,24 +212,24 @@ var axis = function () {
 
     self.setAxisLimits = ko.observable(false);
 
-    self.styleXLabel = ko.observable(false);
+    self.styleXLabel     = ko.observable(false);
     self.xLabelXLocation = ko.observable("0.5");
     self.xLabelYLocation = ko.observable("-0.1");
 
     self.styleYLabel = ko.observable(false);
 
-    self.useNonBoxAxis = ko.observable(false);
+    self.useNonBoxAxis    = ko.observable(false);
     self.axisXLineSetting = ko.observable("box");
     self.axisYLineSetting = ko.observable("box");
-    self.axisLineSetting = ko.observable("box");
+    self.axisLineSetting  = ko.observable("box");
     
 
-    self.showLegend = ko.observable(false);
+    self.showLegend         = ko.observable(false);
     self.shorthandLegendPos = ko.observable("north east");
-    self.legendPosType = ko.observable("shorthand");
-    self.legendXCustomPos = ko.observable("0.9");
-    self.legendYCustomPos = ko.observable("0.9");
-    self.legendAnchor = ko.observable("south");
+    self.legendPosType      = ko.observable(tikzgen.defaultText);
+    self.legendXCustomPos   = ko.observable("0.9");
+    self.legendYCustomPos   = ko.observable("0.9");
+    self.legendAnchor       = ko.observable("south");
 
 
     self.options = ko.computed(function () {

@@ -53,11 +53,17 @@
 
         <h3>Legend Options</h3>
         <div>
-            <label class="clickable-label"  data-bind="attr:{for: 'show-legend'+$index()}">Show Legend?</label> <input type="checkbox" data-bind="attr:{id: 'show-legend'+$index()}, checked: showLegend"></input>
+            <label class="clickable-label"  data-bind="attr:{for: 'show-legend'+$index()}">Show Legend?</label>
+            <input type="checkbox" data-bind="attr:{id: 'show-legend'+$index()}, checked: showLegend"></input>
         </div>
         <div data-bind="visible: showLegend">
             <div>
-                <input data-bind="attr:{name: 'legend-pos-radio'+$index(), id: 'legend-pos-radio-shorthand'+$index()}, checked: legendPosType" value="shorthand" type="radio"></input> <label class="clickable-label" data-bind="attr:{for: 'legend-pos-radio-shorthand'+$index()}">Use shorthand legend position</label>
+                <input data-bind="attr:{name: 'legend-pos-radio'+$index(), id: 'legend-pos-radio-default'+$index()}, checked: legendPosType" value="default" type="radio"></input>
+                <label class="clickable-label" data-bind="attr:{for: 'legend-pos-radio-default'+$index()}">Use default legend position</label>
+            </div>
+            <div>
+                <input data-bind="attr:{name: 'legend-pos-radio'+$index(), id: 'legend-pos-radio-shorthand'+$index()}, checked: legendPosType" value="shorthand" type="radio"></input>
+                <label class="clickable-label" data-bind="attr:{for: 'legend-pos-radio-shorthand'+$index()}">Use shorthand legend position</label>
             </div>
             <div> <select data-bind="options: legendPosOptions, visible: showLegend() && legendPosType() === 'shorthand', value: shorthandLegendPos"></select> </div>
 
@@ -126,16 +132,23 @@
 
 <script type="text/html" charset="utf-8" id="base-plot-options">
 <div class="plot">
-<label>Color: </label> <select data-bind="options: colorOptions, value: commonPlotOptions.color" size="1"></select>
-    <label>Marker Type:</label> 
-    <select data-bind="options: markOptions, value: commonPlotOptions.mark" size="1"></select>
-<label data-bind="attr:{for: 'smooth'+$index()}">Smooth Plot?</label> <input type="checkbox" name="smooth-plot" data-bind="attr:{id: 'smooth'+$index()},checked: commonPlotOptions.makeSmooth">
+    <label>Color: </label> <select data-bind="options: colorOptions, value: commonPlotOptions.color" size="1"></select>
+    <label>Marker Type:</label> <select data-bind="options: markOptions, value: commonPlotOptions.mark" size="1"></select>
+    <label class="clickable-label" data-bind="attr:{for: 'smooth'+$index()}">Smooth Plot?</label> <input type="checkbox" name="smooth-plot" data-bind="attr:{id: 'smooth'+$index()},checked: commonPlotOptions.makeSmooth">
 <label>Line Style</label><select data-bind="options: lineStyleOptions, value: commonPlotOptions.lineStyle"></select>
+</div>
+<div>
+    <label class="clickable-label" data-bind="attr:{for:'add-legend-entry'+$index()}">Add legend entry?</label><input  type="checkbox" data-bind="attr:{id: 'add-legend-entry'+$index()}, checked: commonPlotOptions.addLegendEntry"></input>
+<div data-bind="visible: commonPlotOptions.addLegendEntry">
+<label>Legend Entry Text:</label> <input type="text" data-bind="textInput: commonPlotOptions.legendEntry"></input></div>
 </div>
 </script>
 
 
 <script type="text/html" id="math-expression" >
+<div data-bind="template:{name:'base-plot-options'}">
+    
+</div>
 <div>
 <label>Math expression:</label> <input type="search" data-bind="textInput: expression"></input>
 <button data-bind="click: $parent.removePlot">Remove Plot</button>
