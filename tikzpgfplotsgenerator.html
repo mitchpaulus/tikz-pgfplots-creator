@@ -31,15 +31,15 @@
         </div>
 
         <div>
-            <label data-bind="attr:{for: 'axis-grid-' + $index()}">Include Grid?</label>  
+            <label class="clickable-label" data-bind="attr:{for: 'axis-grid-' + $index()}">Include Grid?</label>  
             <input type="checkbox" data-bind="checked: allGrid, attr: {id: 'axis-grid-' + $index()}">  </input>
         </div>
         <div>
-            <label  data-bind="attr:{for: 'axis-ticks' + $index()}">Hide all ticks?</label> 
+            <label class="clickable-label"  data-bind="attr:{for: 'axis-ticks' + $index()}">Hide all ticks?</label> 
             <input type="checkbox" data-bind="checked: hideAllTicks, attr:{id: 'axis-ticks' + $index()}">  </input>
         </div>
         <div>
-            <label data-bind="attr:{for: 'set-axis-limits' + $index()}">Set Axis Limits</label>
+            <label class="clickable-label"  data-bind="attr:{for: 'set-axis-limits' + $index()}">Set Axis Limits</label>
             <input type="checkbox" data-bind="checked: setAxisLimits, attr:{id: 'set-axis-limits' + $index()}"></input>
 
             <div data-bind="visible: setAxisLimits">
@@ -53,7 +53,7 @@
 
         <h3>Legend Options</h3>
         <div>
-            <label data-bind="attr:{for: 'show-legend'+$index()}">Show Legend?</label> <input type="checkbox" data-bind="attr:{id: 'show-legend'+$index()}, checked: showLegend"></input>
+            <label class="clickable-label"  data-bind="attr:{for: 'show-legend'+$index()}">Show Legend?</label> <input type="checkbox" data-bind="attr:{id: 'show-legend'+$index()}, checked: showLegend"></input>
         </div>
         <div data-bind="visible: showLegend">
             <div>
@@ -76,7 +76,7 @@
         <h3> Label Styles </h3>
 
         <div> 
-            <label data-bind="attr:{for: 'axis-label-pos' + $index()}">Set position on the axis in axis coordinates </label> <input type="checkbox" data-bind="checked: styleXLabel, attr:{id: 'axis-label-pos' + $index()}"> </input>
+            <label class="clickable-label"  data-bind="attr:{for: 'axis-label-pos' + $index()}">Set position on the axis in axis coordinates </label> <input type="checkbox" data-bind="checked: styleXLabel, attr:{id: 'axis-label-pos' + $index()}"> </input>
         </div>
         <div data-bind="visible: styleXLabel">
             <label>x label x-position</label><input type="search" data-bind="textInput: xLabelXLocation"> 
@@ -84,12 +84,12 @@
         </div>
 
         <div> 
-            <label data-bind="attr:{for: 'rotate-y-axis' + $index()}">Rotate Y-Axis Label?</label> <input type="checkbox" data-bind="checked: rotateYAxis, attr:{id: 'rotate-y-axis' + $index()}"> </input> 
+            <label class="clickable-label"  data-bind="attr:{for: 'rotate-y-axis' + $index()}">Rotate Y-Axis Label?</label> <input type="checkbox" data-bind="checked: rotateYAxis, attr:{id: 'rotate-y-axis' + $index()}"> </input> 
             <label data-bind="visible: rotateYAxis">Rotation angle:</label> <input type="text" data-bind="visible: rotateYAxis,  textInput: rotateYAxisAngle" ></input>
         </div>
 
         <div>
-            <label for="use-non-box-axis-lines">Use non box axis?</label><input id="use-non-box-axis-lines" type="checkbox" data-bind="checked: useNonBoxAxis">
+            <label class="clickable-label"  for="use-non-box-axis-lines">Use non box axis?</label><input id="use-non-box-axis-lines" type="checkbox" data-bind="checked: useNonBoxAxis">
             <select data-bind="visible: useNonBoxAxis, options: lineSettingOptions, value: axisLineSetting"> </select>
         </div>
 
@@ -130,6 +130,7 @@
     <label>Marker Type:</label> 
     <select data-bind="options: markOptions, value: commonPlotOptions.mark" size="1"></select>
 <label data-bind="attr:{for: 'smooth'+$index()}">Smooth Plot?</label> <input type="checkbox" name="smooth-plot" data-bind="attr:{id: 'smooth'+$index()},checked: commonPlotOptions.makeSmooth">
+<label>Line Style</label><select data-bind="options: lineStyleOptions, value: commonPlotOptions.lineStyle"></select>
 </div>
 </script>
 

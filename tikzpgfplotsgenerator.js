@@ -1,3 +1,6 @@
+const tikzgen = {
+    defaultText: "default",
+}
 const delimiterOptions = ["space", "tab", "comma", "colon", "semicolon","braces","&","ampersand"];
 const markOptions = ["no marks", "*", "x", "+", "-", "|", "o",
       "asterisk", "star", "10-pointed-star","oplus","oplus*",
@@ -7,6 +10,7 @@ const markOptions = ["no marks", "*", "x", "+", "-", "|", "o",
       "halfcircle", "halfcircle*", "pentagon",
       "pentagon*", "cube", "cube*"];
 const colorOptions = [
+tikzgen.defaultText,
 "red", "green","blue","cyan",
     "magenta","yellow","black","gray",
     "white","darkgray","lightgray","brown",
@@ -25,20 +29,30 @@ const anchorOptions = [
 "center","north","south","west","east","north east","south east","south west","north west"
 ]
 
+const lineStyleOptions = [
+tikzgen.defaultText,
+    "solid","dotted","densely dotted","loosely dotted",
+    "dashed","densely dashed","loosely dashed",
+    "dashdotted", "densely dashdotted", "loosely dashdotted",
+    "dashdotdotted", "densely dashdotdotted", "loosely dashdotdotted"
+]
+
 var commonPlotOptions = function () {
 
     var self = this;
 
-    self.color = ko.observable("black");
+    self.color = ko.observable(colorOptions[0]);
     self.mark = ko.observable("");
 
     self.makeSmooth = ko.observable(false);
+
+    self.lineStyle = ko.observable(lineStyleOptions[0]);
 
     self.commonPlotOptionArray = ko.computed(function () {
         var optionArray = [];
 
 
-        if (self.color()) {
+        if (self.color() !== lineStyleOptions[0]) {
             optionArray.push(self.color());
         }
 
@@ -49,10 +63,14 @@ var commonPlotOptions = function () {
             optionArray.push(`mark=${self.mark()}`)
         }
 
-
         if (self.makeSmooth()) {
             optionArray.push("smooth");
         }
+
+        if (self.lineStyle() !== lineStyleOptions[0]) {
+            optionArray.push(self.lineStyle());
+        }
+
 
         return optionArray;
     });

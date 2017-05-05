@@ -28,3 +28,7 @@ textarea {
     width: 45%;
     float: left;
 }
+
+.clickable-label {
+    cursor: pointer;
+}
