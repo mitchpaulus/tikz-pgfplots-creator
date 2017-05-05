@@ -101,7 +101,7 @@
 
         <h2>Add Series</h2> 
         <button data-bind="click: addTableSeries">Add a Series From a File</button><button style="margin-left: 2em" data-bind="click: addMathSeries">Add a Series from Math Function</button>
-        <div data-bind=" template: { foreach: plots, name: seriesTemplateName } ">
+        <div class="plot" data-bind=" template: { foreach: plots, name: seriesTemplateName } ">
         </div>
 
 
@@ -120,7 +120,7 @@
     </div>
     <div>
         <p>Plot output</p>
-        <textarea name="output" rows="20" cols="72" readonly data-bind="value: output"></textarea>
+        <textarea onclick="this.select()" name="output" rows="20" cols="72" readonly data-bind="value: output"></textarea>
     </div>
 
 </div>
@@ -131,7 +131,7 @@
 <script src="tikzpgfplotsgenerator.js"></script>
 
 <script type="text/html" charset="utf-8" id="base-plot-options">
-<div class="plot">
+<div>
     <label>Color: </label> <select data-bind="options: colorOptions, value: commonPlotOptions.color" size="1"></select>
     <label>Marker Type:</label> <select data-bind="options: markOptions, value: commonPlotOptions.mark" size="1"></select>
     <label class="clickable-label" data-bind="attr:{for: 'smooth'+$index()}">Smooth Plot?</label> <input type="checkbox" name="smooth-plot" data-bind="attr:{id: 'smooth'+$index()},checked: commonPlotOptions.makeSmooth">
@@ -146,6 +146,7 @@
 
 
 <script type="text/html" id="math-expression" >
+<div class="series">
 <div data-bind="template:{name:'base-plot-options'}">
     
 </div>
@@ -154,10 +155,13 @@
 <button data-bind="click: $parent.removePlot">Remove Plot</button>
 <p>Math Expression.</p>
 </div>
+</div>
 </script>
 
 
 <script type="text/html" id="table" >
+<div class="series">
+    
 <div data-bind="template:{name:'base-plot-options'}">
 
 </div>
@@ -173,6 +177,7 @@
 
 
 <button data-bind="click: $parent.removePlot">Remove Plot</button>
+</div>
 </div>
 </script>
 
