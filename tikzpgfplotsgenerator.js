@@ -17,6 +17,13 @@ const lineSettingOptions = [
     "box","left","middle","center","right","none"
 ];
 
+const legendPosOptions = [
+"south west","south east","north west","north east","outer north east"
+]
+
+const anchorOptions = [
+"center","north","south","west","east","north east","south east","south west","north west"
+]
 
 var commonPlotOptions = function () {
 
@@ -179,6 +186,15 @@ var axis = function () {
     self.axisYLineSetting = ko.observable("box");
     self.axisLineSetting = ko.observable("box");
     
+
+    self.showLegend = ko.observable(false);
+    self.shorthandLegendPos = ko.observable("north east");
+    self.legendPosType = ko.observable("shorthand");
+    self.legendXCustomPos = ko.observable("0.9");
+    self.legendYCustomPos = ko.observable("0.9");
+    self.legendAnchor = ko.observable("south");
+
+
     self.options = ko.computed(function () {
         optionArray = [];
 
@@ -210,6 +226,16 @@ var axis = function () {
 
         if (self.useNonBoxAxis()) {
             optionArray.push("axis lines=" + self.axisLineSetting());
+        }
+
+
+        if (self.showLegend()) {
+           if (self.legendPosType() === "shorthand") {
+               optionArray.push("legend pos=" + self.shorthandLegendPos());
+           }
+           else if (self.legendPosType() === "custom") {
+               optionArray.push("legend style={at={(" + self.legendXCustomPos() + "," + self.legendYCustomPos() + ")}, anchor=" + self.legendAnchor() + "}");
+           }
         }
 
         return optionArray;
