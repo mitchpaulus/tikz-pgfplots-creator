@@ -57,12 +57,12 @@
         </div>
         <div data-bind="visible: showLegend">
             <div>
-                <input data-bind="attr:{name: 'legend-pos-radio'+$index(), id: 'legend-pos-radio-shorthand'+$index()}, checked: legendPosType" value="shorthand" type="radio"></input> <label>Use shorthand legend position</label>
+                <input data-bind="attr:{name: 'legend-pos-radio'+$index(), id: 'legend-pos-radio-shorthand'+$index()}, checked: legendPosType" value="shorthand" type="radio"></input> <label class="clickable-label" data-bind="attr:{for: 'legend-pos-radio-shorthand'+$index()}">Use shorthand legend position</label>
             </div>
             <div> <select data-bind="options: legendPosOptions, visible: showLegend() && legendPosType() === 'shorthand', value: shorthandLegendPos"></select> </div>
 
             <div>
-                <input data-bind="attr:{name: 'legend-pos-radio'+$index(), id: 'legend-pos-radio-custom'+$index()}, checked: legendPosType" value="custom" type="radio"></input> <label>Specify exact legend position</label>       
+                <input data-bind="attr:{name: 'legend-pos-radio'+$index(), id: 'legend-pos-radio-custom'+$index()}, checked: legendPosType" value="custom" type="radio"></input> <label data-bind="attr:{for: 'legend-pos-radio-custom'+$index()}" class="clickable-label">Specify exact legend position</label>       
             </div>
             <div data-bind="visible: showLegend() && legendPosType() === 'custom'">
                 <p>Legend position (use axis coordinates 0-1)</p>
