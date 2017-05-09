@@ -26,21 +26,21 @@
     <button data-bind="click: addAxis">Add New Axis</button>
     <div data-bind="foreach: axes">
         <div>
-            <label>X Label</label> <input data-bind="textInput: xLabel" type="text"> </input>
-            <label>Y Label</label> <input data-bind="textInput: yLabel" type="text"> </input>
+            <label>X Label</label> <input data-bind="textInput: xLabel" type="text"> 
+            <label>Y Label</label> <input data-bind="textInput: yLabel" type="text"> 
         </div>
 
         <div>
             <label class="clickable-label" data-bind="attr:{for: 'axis-grid-' + $index()}">Include Grid?</label>  
-            <input type="checkbox" data-bind="checked: allGrid, attr: {id: 'axis-grid-' + $index()}">  </input>
+            <input type="checkbox" data-bind="checked: allGrid, attr: {id: 'axis-grid-' + $index()}">  
         </div>
         <div>
             <label class="clickable-label"  data-bind="attr:{for: 'axis-ticks' + $index()}">Hide all ticks?</label> 
-            <input type="checkbox" data-bind="checked: hideAllTicks, attr:{id: 'axis-ticks' + $index()}">  </input>
+            <input type="checkbox" data-bind="checked: hideAllTicks, attr:{id: 'axis-ticks' + $index()}">  
         </div>
         <div>
             <label class="clickable-label"  data-bind="attr:{for: 'set-axis-limits' + $index()}">Set Axis Limits</label>
-            <input type="checkbox" data-bind="checked: setAxisLimits, attr:{id: 'set-axis-limits' + $index()}"></input>
+            <input type="checkbox" data-bind="checked: setAxisLimits, attr:{id: 'set-axis-limits' + $index()}">
 
             <div data-bind="visible: setAxisLimits">
                 <label>X Min</label> <input type="search" data-bind="textInput: xMin" >
@@ -54,26 +54,26 @@
         <h3>Legend Options</h3>
         <div>
             <label class="clickable-label"  data-bind="attr:{for: 'show-legend'+$index()}">Show Legend?</label>
-            <input type="checkbox" data-bind="attr:{id: 'show-legend'+$index()}, checked: showLegend"></input>
+            <input type="checkbox" data-bind="attr:{id: 'show-legend'+$index()}, checked: showLegend">
         </div>
         <div data-bind="visible: showLegend">
             <div>
-                <input data-bind="attr:{name: 'legend-pos-radio'+$index(), id: 'legend-pos-radio-default'+$index()}, checked: legendPosType" value="default" type="radio"></input>
+                <input data-bind="attr:{name: 'legend-pos-radio'+$index(), id: 'legend-pos-radio-default'+$index()}, checked: legendPosType" value="default" type="radio">
                 <label class="clickable-label" data-bind="attr:{for: 'legend-pos-radio-default'+$index()}">Use default legend position</label>
             </div>
             <div>
-                <input data-bind="attr:{name: 'legend-pos-radio'+$index(), id: 'legend-pos-radio-shorthand'+$index()}, checked: legendPosType" value="shorthand" type="radio"></input>
+                <input data-bind="attr:{name: 'legend-pos-radio'+$index(), id: 'legend-pos-radio-shorthand'+$index()}, checked: legendPosType" value="shorthand" type="radio">
                 <label class="clickable-label" data-bind="attr:{for: 'legend-pos-radio-shorthand'+$index()}">Use shorthand legend position</label>
             </div>
             <div> <select data-bind="options: legendPosOptions, visible: showLegend() && legendPosType() === 'shorthand', value: shorthandLegendPos"></select> </div>
 
             <div>
-                <input data-bind="attr:{name: 'legend-pos-radio'+$index(), id: 'legend-pos-radio-custom'+$index()}, checked: legendPosType" value="custom" type="radio"></input> <label data-bind="attr:{for: 'legend-pos-radio-custom'+$index()}" class="clickable-label">Specify exact legend position</label>       
+                <input data-bind="attr:{name: 'legend-pos-radio'+$index(), id: 'legend-pos-radio-custom'+$index()}, checked: legendPosType" value="custom" type="radio"><label data-bind="attr:{for: 'legend-pos-radio-custom'+$index()}" class="clickable-label">Specify exact legend position</label>       
             </div>
             <div data-bind="visible: showLegend() && legendPosType() === 'custom'">
                 <p>Legend position (use axis coordinates 0-1)</p>
-                <div><label>Legend X Pos</label> <input type="text" data-bind="textInput: legendXCustomPos"></input></div>
-                <div><label>Legend Y Pos</label> <input type="text" data-bind="textInput: legendYCustomPos"></input></div>
+                <div><label>Legend X Pos</label> <input type="text" data-bind="textInput: legendXCustomPos"></div>
+                <div><label>Legend Y Pos</label> <input type="text" data-bind="textInput: legendYCustomPos"></div>
                 <div><label>Anchor</label> <select data-bind="options: anchorOptions, value: legendAnchor"> </select></div>
             </div>
 
@@ -82,16 +82,16 @@
         <h3> Label Styles </h3>
 
         <div> 
-            <label class="clickable-label"  data-bind="attr:{for: 'axis-label-pos' + $index()}">Set position on the axis in axis coordinates </label> <input type="checkbox" data-bind="checked: styleXLabel, attr:{id: 'axis-label-pos' + $index()}"> </input>
+            <label class="clickable-label"  data-bind="attr:{for: 'axis-label-pos' + $index()}">Set position on the axis in axis coordinates </label> <input type="checkbox" data-bind="checked: styleXLabel, attr:{id: 'axis-label-pos' + $index()}"> 
         </div>
         <div data-bind="visible: styleXLabel">
             <label>x label x-position</label><input type="search" data-bind="textInput: xLabelXLocation"> 
-            <label>x label y-position</label> </input><input type="search" data-bind="textInput: xLabelYLocation"></input>
+            <label>x label y-position</label> <input type="search" data-bind="textInput: xLabelYLocation">
         </div>
 
         <div> 
-            <label class="clickable-label"  data-bind="attr:{for: 'rotate-y-axis' + $index()}">Rotate Y-Axis Label?</label> <input type="checkbox" data-bind="checked: rotateYAxis, attr:{id: 'rotate-y-axis' + $index()}"> </input> 
-            <label data-bind="visible: rotateYAxis">Rotation angle:</label> <input type="text" data-bind="visible: rotateYAxis,  textInput: rotateYAxisAngle" ></input>
+            <label class="clickable-label"  data-bind="attr:{for: 'rotate-y-axis' + $index()}">Rotate Y-Axis Label?</label> <input type="checkbox" data-bind="checked: rotateYAxis, attr:{id: 'rotate-y-axis' + $index()}">  
+            <label data-bind="visible: rotateYAxis">Rotation angle:</label> <input type="text" data-bind="visible: rotateYAxis,  textInput: rotateYAxisAngle" >
         </div>
 
         <div>
@@ -138,9 +138,9 @@
 <label>Line Style</label><select data-bind="options: lineStyleOptions, value: commonPlotOptions.lineStyle"></select>
 </div>
 <div>
-    <label class="clickable-label" data-bind="attr:{for:'add-legend-entry'+$index()}">Add legend entry?</label><input  type="checkbox" data-bind="attr:{id: 'add-legend-entry'+$index()}, checked: commonPlotOptions.addLegendEntry"></input>
+    <label class="clickable-label" data-bind="attr:{for:'add-legend-entry'+$index()}">Add legend entry?</label><input  type="checkbox" data-bind="attr:{id: 'add-legend-entry'+$index()}, checked: commonPlotOptions.addLegendEntry">
 <div data-bind="visible: commonPlotOptions.addLegendEntry">
-<label>Legend Entry Text:</label> <input type="text" data-bind="textInput: commonPlotOptions.legendEntry"></input></div>
+<label>Legend Entry Text:</label> <input type="text" data-bind="textInput: commonPlotOptions.legendEntry"></div>
 </div>
 </script>
 
@@ -151,7 +151,7 @@
     
 </div>
 <div>
-<label>Math expression:</label> <input type="search" data-bind="textInput: expression"></input>
+<label>Math expression:</label> <input type="search" data-bind="textInput: expression">
 <button data-bind="click: $parent.removePlot">Remove Plot</button>
 <p>Math Expression.</p>
 </div>
@@ -168,22 +168,27 @@
 <div>
 <p>Select the column separator. Default is space.</p>
     <label>Column Separator</label> 
-    <select data-bind="options: delimiterOptions, value: delimiter" size="1">
+    <select data-bind="options: delimiterOptions, value: delimiter" size="1"></select>
 
-    </select>
-
-    </select>
-<label>File name: </label> <input data-bind="textInput: filename"></input>
-
-<input type="radio" name="{name}"></input>
-
+<label>File name: </label> <input type="search" data-bind="textInput: filename">
 
 <button data-bind="click: $parent.removePlot">Remove Plot</button>
 </div>
 <p>Specify columns</p>
-<div><input type="radio" data-bind="attr:{name: 'column-selection'+$index(), id: 'col-specifier-' + specifyColumnValues.default + $index(), value: specifyColumnValues.default}, checkedValue: columnHeaderOption"></input> <label data-bind="attr:{for: 'col-specifier-' + specifyColumnValues.default + $index()}">Default Convention</label></div>
-<div><input type="radio" data-bind="attr:{name: 'column-selection'+$index(),  value: specifyColumnValues.byColumnName}, checkedValue: columnHeaderOption"></input> <label>By Column Name</label></div>
-<div><input type="radio" data-bind="attr:{name: 'column-selection'+$index(), value: specifyColumnValues.byIndex}, checkedValue: columnHeaderOption, "></input> <label>By Index (0 - based)</label></div>
+<div>
+
+<input type="radio" data-bind="attr:{name: 'column-selection'+$index(), id: 'col-specifier-' + seriesSpecifyOptions.default + $index() }, checked: columnHeaderOption, checkedValue: seriesSpecifyOptions.default"/>
+<label data-bind="attr:{for: 'col-specifier-' + seriesSpecifyOptions.default + $index()}">Default Convention</label>
+
+</div>
+<div><input type="radio" data-bind="attr:{name: 'column-selection'+$index() }, checked: columnHeaderOption, checkedValue: seriesSpecifyOptions.byColumnName"/>
+<label>By Column Name</label>
+
+</div>
+<div><input type="radio" data-bind="attr:{name: 'column-selection'+$index() }, checked: columnHeaderOption, checkedValue: seriesSpecifyOptions.byIndex"/>
+<label>By Index (0 - based)</label>
+</div>
+
 </div>
 </script>
 

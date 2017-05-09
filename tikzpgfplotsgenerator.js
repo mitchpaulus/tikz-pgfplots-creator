@@ -2,7 +2,7 @@ const tikzgen = {
     defaultText: "default",
 };
 
-const specifyColumnValues = {
+const seriesSpecifyOptions = {
     default: "default",
     byColumnName: "byColumnName",
     byIndex: "byIndex"
@@ -110,7 +110,7 @@ var addPlotTable = function () {
 
     self.commonPlotOptions = new commonPlotOptions();
 
-    self.columnHeaderOption = ko.observable(specifyColumnValues.default);
+    self.columnHeaderOption = ko.observable(seriesSpecifyOptions.default);
     self.yColumnHeaderName = ko.observable("pressure");
     self.xColumnHeaderName = ko.observable("temperature");
 
