@@ -106,13 +106,13 @@ var addPlotTable = function () {
 
     self.delimiter = ko.observable("");
 
-    self.filename = ko.observable("samplefile.csv");
+    self.filename = ko.observable("");
 
     self.commonPlotOptions = new commonPlotOptions();
 
     self.columnHeaderOption = ko.observable(seriesSpecifyOptions.default);
-    self.yColumnHeaderName = ko.observable("pressure");
-    self.xColumnHeaderName = ko.observable("temperature");
+    self.yColumnHeaderName = ko.observable("");
+    self.xColumnHeaderName = ko.observable("");
 
     self.yColumnIndex = ko.observable("1");
     self.xColumnIndex = ko.observable("0");

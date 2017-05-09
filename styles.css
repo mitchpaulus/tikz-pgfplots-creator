@@ -5,8 +5,20 @@ button {
     cursor: pointer;
 }
 
+input {
+    padding: 4px;
+}
+
+.optionRow {
+    margin-bottom: 1em;
+}
+
 input[type="radio"] {
     cursor: pointer;
+}
+
+select {
+    padding:5px;
 }
 
 body {

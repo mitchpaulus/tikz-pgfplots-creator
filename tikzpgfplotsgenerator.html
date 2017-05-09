@@ -2,15 +2,15 @@
 
 <html lang="en">
 <head>
-<meta charset="utf-8">
+    <meta charset="utf-8">
+    <title>Tikz Plot Generator</title>
+    <meta name="description" content="Tikz pgfplots generator">
+    <meta name="author" content="Mitchell Paulus">
 
-<title>Tikz Plot Generator</title>
-<meta name="description" content="Tikz pgfplots generator">
-<meta name="author" content="Mitchell Paulus">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon"   href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAA AAAAAAAAAAAAQijrALeu9QDM9PQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAATMzMzMzMzMTEzMzMzMzMTMxMzMzMzMTMzEzMzMzMxMzMhMzMz MxIzMzEzMzMzEzMzMTMzMzMTMzMyEzMzMSMzMzMTMzMxMzMzMzEzMxMzMzMzMxMxMzMzMzMzMRMz MzMzMzMzMzMzMwAAAAAAAAAAAAAAAAAAAAD//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP//AAD//wAA">
 
-<link rel="stylesheet" href="styles.css">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
 
 </head>
 
@@ -25,11 +25,10 @@ This page serves as a helpful tool to create most simple 2-dimensional plots usi
 <div id="left-column">
 
     <h2>Add Axis</h2>
-    <button data-bind="click: addAxis">Add New Axis</button>
     <div data-bind="foreach: axes">
         <div>
-            <div><label>X Label</label> <input data-bind="textInput: xLabel" type="search"></div> 
-            <div><label>Y Label</label> <input data-bind="textInput: yLabel" type="search"></div> 
+            <div class="optionRow"><label>X Label</label> <input placeholder="temperature" data-bind="textInput: xLabel" type="search"></div> 
+            <div class="optionRow"><label>Y Label</label> <input placeholder="pressure" data-bind="textInput: yLabel" type="search"></div> 
         </div>
 
         <div>
@@ -104,6 +103,7 @@ This page serves as a helpful tool to create most simple 2-dimensional plots usi
             <select data-bind="visible: useNonBoxAxis, options: lineSettingOptions, value: axisLineSetting"> </select>
         </div>
 
+
         <h2>Add Series</h2> 
         <button data-bind="click: addTableSeries">Add a Series From a File or Table</button><button style="margin-left: 2em" data-bind="click: addMathSeries">Add a Series from Math Function</button>
         <div class="plot" data-bind=" template: { foreach: plots, name: seriesTemplateName } "> </div>
@@ -135,35 +135,41 @@ This page serves as a helpful tool to create most simple 2-dimensional plots usi
 
 <script type="text/html" charset="utf-8" id="base-plot-options">
 <div>
-    <div>
+    <div class="optionRow">
         <label>Color: </label> 
         <select data-bind="options: colorOptions, value: commonPlotOptions.color" size="1"></select>
     </div>
 
-    <div>
+    <div class="optionRow">
         <label>Marker Type:</label> 
         <select data-bind="options: markOptions, value: commonPlotOptions.mark" size="1"></select>
     </div>
 
-    <div>
-        <input type="checkbox" name="smooth-plot" data-bind="attr:{id: 'smooth'+$index()},checked: commonPlotOptions.makeSmooth">
-        <label class="clickable-label" data-bind="attr:{for: 'smooth'+$index()}">Smooth Plot?</label> 
-    </div>
-
-    <div>
+    <div class="optionRow">
         <label>Line Style</label>
         <select data-bind="options: lineStyleOptions, value: commonPlotOptions.lineStyle"></select>
     </div>
 
-</div>
-<div>
-    <input type="checkbox" data-bind="attr:{id: 'add-legend-entry'+$index()}, checked: commonPlotOptions.addLegendEntry">
-    <label class="clickable-label" data-bind="attr:{for:'add-legend-entry'+$index()}">Add legend entry?</label>
-    <div data-bind="visible: commonPlotOptions.addLegendEntry">
-        <label>Legend Entry Text:</label>
-        <input type="search" data-bind="textInput: commonPlotOptions.legendEntry">
+    <div class="optionRow">
+        <div>
+            <input type="checkbox" name="smooth-plot" data-bind="attr:{id: 'smooth'+$index()},checked: commonPlotOptions.makeSmooth">
+            <label class="clickable-label" data-bind="attr:{for: 'smooth'+$index()}">Smooth Plot?</label> 
+        </div>
+
+        <div>
+            <input type="checkbox" data-bind="attr:{id: 'add-legend-entry'+$index()}, checked: commonPlotOptions.addLegendEntry">
+            <label class="clickable-label" data-bind="attr:{for:'add-legend-entry'+$index()}">Add legend entry?</label>
+
+            <div data-bind="visible: commonPlotOptions.addLegendEntry">
+                <label>Legend Entry Text:</label>
+                <input type="search" data-bind="textInput: commonPlotOptions.legendEntry">
+            </div>
+
+        </div>
     </div>
+
 </div>
+
 </script>
 
 
@@ -190,7 +196,7 @@ This page serves as a helpful tool to create most simple 2-dimensional plots usi
             <label>Column Separator</label> 
             <select data-bind="options: delimiterOptions, value: delimiter" size="1"></select>
 
-        <div><label>File name: </label> <input type="search" data-bind="textInput: filename"></div>
+        <div><label>File name: </label> <input placeholder="samplefilename.csv" type="search" data-bind="textInput: filename"></div>
     </div>
     <p>Specify columns</p>
     <div>
@@ -206,8 +212,8 @@ This page serves as a helpful tool to create most simple 2-dimensional plots usi
     </div>
 
     <div data-bind="visible: columnHeaderOption() === seriesSpecifyOptions.byColumnName">
-        <div><label>X Column Header</label> <input type="search" data-bind="textInput: xColumnHeaderName"></div>
-        <div><label>Y Column Header</label> <input type="search" data-bind="textInput: yColumnHeaderName"></div>
+        <div><label>X Column Header</label> <input type="search" placeholder="pressure"     data-bind="textInput: xColumnHeaderName"></div>
+        <div><label>Y Column Header</label> <input type="search" placeholder="temperature"  data-bind="textInput: yColumnHeaderName"></div>
     </div>
 
 
