@@ -5,8 +5,8 @@
 <meta charset="utf-8">
 
 <title>Tikz Plot Generator</title>
-<meta name="description" content="The HTML5 Herald">
-<meta name="author" content="SitePoint">
+<meta name="description" content="Tikz pgfplots generator">
+<meta name="author" content="Mitchell Paulus">
 
 <link rel="stylesheet" href="styles.css">
 
@@ -18,7 +18,9 @@
 
 <a href="https://github.com/mitchpaulus"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
 
-<p> This is a generator of basic tikz pgfplots.   </p>
+<p id="page-description"> For those getting started with LaTex and Tikz/PGFPLOTS, it can be difficult to remember all the keys and options.
+This page serves as a helpful tool to create most simple 2-dimensional plots using Tikz and the pgfplots package.    </p>
+
 
 <div id="left-column">
 
@@ -26,35 +28,35 @@
     <button data-bind="click: addAxis">Add New Axis</button>
     <div data-bind="foreach: axes">
         <div>
-            <label>X Label</label> <input data-bind="textInput: xLabel" type="text"> 
-            <label>Y Label</label> <input data-bind="textInput: yLabel" type="text"> 
+            <div><label>X Label</label> <input data-bind="textInput: xLabel" type="search"></div> 
+            <div><label>Y Label</label> <input data-bind="textInput: yLabel" type="search"></div> 
         </div>
 
         <div>
-            <label class="clickable-label" data-bind="attr:{for: 'axis-grid-' + $index()}">Include Grid?</label>  
             <input type="checkbox" data-bind="checked: allGrid, attr: {id: 'axis-grid-' + $index()}">  
+            <label class="clickable-label" data-bind="attr:{for: 'axis-grid-' + $index()}">Include Grid?</label>  
         </div>
         <div>
-            <label class="clickable-label"  data-bind="attr:{for: 'axis-ticks' + $index()}">Hide all ticks?</label> 
             <input type="checkbox" data-bind="checked: hideAllTicks, attr:{id: 'axis-ticks' + $index()}">  
+            <label class="clickable-label"  data-bind="attr:{for: 'axis-ticks' + $index()}">Hide all ticks?</label> 
         </div>
         <div>
-            <label class="clickable-label"  data-bind="attr:{for: 'set-axis-limits' + $index()}">Set Axis Limits</label>
             <input type="checkbox" data-bind="checked: setAxisLimits, attr:{id: 'set-axis-limits' + $index()}">
+            <label class="clickable-label"  data-bind="attr:{for: 'set-axis-limits' + $index()}">Set Axis Limits</label>
 
             <div data-bind="visible: setAxisLimits">
-                <label>X Min</label> <input type="search" data-bind="textInput: xMin" >
-                <label>X Max</label> <input type="search" data-bind="textInput: xMax" >
-                <label>Y Min</label> <input type="search" data-bind="textInput: yMin" >
-                <label>Y Max</label> <input type="search" data-bind="textInput: yMax" >
+                <div><label>X Min</label> <input type="search" data-bind="textInput: xMin" ></div>
+                <div><label>X Max</label> <input type="search" data-bind="textInput: xMax" ></div>
+                <div><label>Y Min</label> <input type="search" data-bind="textInput: yMin" ></div>
+                <div><label>Y Max</label> <input type="search" data-bind="textInput: yMax" ></div>
             </div>
 
         </div>
 
         <h3>Legend Options</h3>
         <div>
-            <label class="clickable-label"  data-bind="attr:{for: 'show-legend'+$index()}">Show Legend?</label>
             <input type="checkbox" data-bind="attr:{id: 'show-legend'+$index()}, checked: showLegend">
+            <label class="clickable-label"  data-bind="attr:{for: 'show-legend'+$index()}">Show Legend?</label>
         </div>
         <div data-bind="visible: showLegend">
             <div>
@@ -72,8 +74,8 @@
             </div>
             <div data-bind="visible: showLegend() && legendPosType() === 'custom'">
                 <p>Legend position (use axis coordinates 0-1)</p>
-                <div><label>Legend X Pos</label> <input type="text" data-bind="textInput: legendXCustomPos"></div>
-                <div><label>Legend Y Pos</label> <input type="text" data-bind="textInput: legendYCustomPos"></div>
+                <div><label>Legend X Pos</label> <input type="search" data-bind="textInput: legendXCustomPos"></div>
+                <div><label>Legend Y Pos</label> <input type="search" data-bind="textInput: legendYCustomPos"></div>
                 <div><label>Anchor</label> <select data-bind="options: anchorOptions, value: legendAnchor"> </select></div>
             </div>
 
@@ -82,7 +84,8 @@
         <h3> Label Styles </h3>
 
         <div> 
-            <label class="clickable-label"  data-bind="attr:{for: 'axis-label-pos' + $index()}">Set position on the axis in axis coordinates </label> <input type="checkbox" data-bind="checked: styleXLabel, attr:{id: 'axis-label-pos' + $index()}"> 
+            <input type="checkbox" data-bind="checked: styleXLabel, attr:{id: 'axis-label-pos' + $index()}"> 
+            <label class="clickable-label"  data-bind="attr:{for: 'axis-label-pos' + $index()}">Set position on the axis in axis coordinates </label> 
         </div>
         <div data-bind="visible: styleXLabel">
             <label>x label x-position</label><input type="search" data-bind="textInput: xLabelXLocation"> 
@@ -90,21 +93,20 @@
         </div>
 
         <div> 
-            <label class="clickable-label"  data-bind="attr:{for: 'rotate-y-axis' + $index()}">Rotate Y-Axis Label?</label> <input type="checkbox" data-bind="checked: rotateYAxis, attr:{id: 'rotate-y-axis' + $index()}">  
-            <label data-bind="visible: rotateYAxis">Rotation angle:</label> <input type="text" data-bind="visible: rotateYAxis,  textInput: rotateYAxisAngle" >
+            <input type="checkbox" data-bind="checked: rotateYAxis, attr:{id: 'rotate-y-axis' + $index()}">  
+            <label class="clickable-label"  data-bind="attr:{for: 'rotate-y-axis' + $index()}">Rotate Y-Axis Label?</label> 
+            <label data-bind="visible: rotateYAxis">Rotation angle:</label> <input type="search" data-bind="visible: rotateYAxis,  textInput: rotateYAxisAngle" >
         </div>
 
         <div>
-            <label class="clickable-label"  for="use-non-box-axis-lines">Use non box axis?</label><input id="use-non-box-axis-lines" type="checkbox" data-bind="checked: useNonBoxAxis">
+            <input id="use-non-box-axis-lines" type="checkbox" data-bind="checked: useNonBoxAxis">
+            <label class="clickable-label"  for="use-non-box-axis-lines">Use non box axis?</label>
             <select data-bind="visible: useNonBoxAxis, options: lineSettingOptions, value: axisLineSetting"> </select>
         </div>
 
         <h2>Add Series</h2> 
-        <button data-bind="click: addTableSeries">Add a Series From a File</button><button style="margin-left: 2em" data-bind="click: addMathSeries">Add a Series from Math Function</button>
-        <div class="plot" data-bind=" template: { foreach: plots, name: seriesTemplateName } ">
-        </div>
-
-
+        <button data-bind="click: addTableSeries">Add a Series From a File or Table</button><button style="margin-left: 2em" data-bind="click: addMathSeries">Add a Series from Math Function</button>
+        <div class="plot" data-bind=" template: { foreach: plots, name: seriesTemplateName } "> </div>
 
     </div>
 
@@ -119,8 +121,9 @@
         <textarea name="output" rows="10" cols="72" readonly data-bind="value: preambleOutput"></textarea>
     </div>
     <div>
-        <p>Plot output</p>
-        <textarea onclick="this.select()" name="output" rows="20" cols="72" readonly data-bind="value: output"></textarea>
+        <p>Plot output</p> 
+        <div><button onclick="document.getElementById('final-output-text').select()">Select all to copy/paste</button></div>
+        <div><textarea id="final-output-text" name="output" rows="20" cols="72" readonly data-bind="value: output"></textarea></div>
     </div>
 
 </div>
@@ -132,15 +135,34 @@
 
 <script type="text/html" charset="utf-8" id="base-plot-options">
 <div>
-    <label>Color: </label> <select data-bind="options: colorOptions, value: commonPlotOptions.color" size="1"></select>
-    <label>Marker Type:</label> <select data-bind="options: markOptions, value: commonPlotOptions.mark" size="1"></select>
-    <label class="clickable-label" data-bind="attr:{for: 'smooth'+$index()}">Smooth Plot?</label> <input type="checkbox" name="smooth-plot" data-bind="attr:{id: 'smooth'+$index()},checked: commonPlotOptions.makeSmooth">
-<label>Line Style</label><select data-bind="options: lineStyleOptions, value: commonPlotOptions.lineStyle"></select>
+    <div>
+        <label>Color: </label> 
+        <select data-bind="options: colorOptions, value: commonPlotOptions.color" size="1"></select>
+    </div>
+
+    <div>
+        <label>Marker Type:</label> 
+        <select data-bind="options: markOptions, value: commonPlotOptions.mark" size="1"></select>
+    </div>
+
+    <div>
+        <input type="checkbox" name="smooth-plot" data-bind="attr:{id: 'smooth'+$index()},checked: commonPlotOptions.makeSmooth">
+        <label class="clickable-label" data-bind="attr:{for: 'smooth'+$index()}">Smooth Plot?</label> 
+    </div>
+
+    <div>
+        <label>Line Style</label>
+        <select data-bind="options: lineStyleOptions, value: commonPlotOptions.lineStyle"></select>
+    </div>
+
 </div>
 <div>
-    <label class="clickable-label" data-bind="attr:{for:'add-legend-entry'+$index()}">Add legend entry?</label><input  type="checkbox" data-bind="attr:{id: 'add-legend-entry'+$index()}, checked: commonPlotOptions.addLegendEntry">
-<div data-bind="visible: commonPlotOptions.addLegendEntry">
-<label>Legend Entry Text:</label> <input type="text" data-bind="textInput: commonPlotOptions.legendEntry"></div>
+    <input  type="checkbox" data-bind="attr:{id: 'add-legend-entry'+$index()}, checked: commonPlotOptions.addLegendEntry">
+    <label class="clickable-label" data-bind="attr:{for:'add-legend-entry'+$index()}">Add legend entry?</label>
+    <div data-bind="visible: commonPlotOptions.addLegendEntry">
+        <label>Legend Entry Text:</label>
+        <input type="search" data-bind="textInput: commonPlotOptions.legendEntry">
+    </div>
 </div>
 </script>
 
@@ -161,34 +183,40 @@
 
 <script type="text/html" id="table" >
 <div class="series">
-    
-<div data-bind="template:{name:'base-plot-options'}">
+    <div data-bind="template:{name:'base-plot-options'}"> </div>
 
-</div>
-<div>
-<p>Select the column separator. Default is space.</p>
-    <label>Column Separator</label> 
-    <select data-bind="options: delimiterOptions, value: delimiter" size="1"></select>
+    <div>
+        <p>Select the column separator. Default is space.</p>
+            <label>Column Separator</label> 
+            <select data-bind="options: delimiterOptions, value: delimiter" size="1"></select>
 
-<label>File name: </label> <input type="search" data-bind="textInput: filename">
+        <div><label>File name: </label> <input type="search" data-bind="textInput: filename"></div>
+    </div>
+    <p>Specify columns</p>
+    <div>
 
-<button data-bind="click: $parent.removePlot">Remove Plot</button>
-</div>
-<p>Specify columns</p>
-<div>
+        <input type="radio" data-bind="attr:{name: 'column-selection'+$index(), id: 'col-specifier-' + seriesSpecifyOptions.default + $index() }, checked: columnHeaderOption, checkedValue: seriesSpecifyOptions.default"/>
+        <label class="clickable-label" data-bind="attr:{for: 'col-specifier-' + seriesSpecifyOptions.default + $index()}">Default Convention</label>
 
-<input type="radio" data-bind="attr:{name: 'column-selection'+$index(), id: 'col-specifier-' + seriesSpecifyOptions.default + $index() }, checked: columnHeaderOption, checkedValue: seriesSpecifyOptions.default"/>
-<label data-bind="attr:{for: 'col-specifier-' + seriesSpecifyOptions.default + $index()}">Default Convention</label>
+    </div>
 
-</div>
-<div><input type="radio" data-bind="attr:{name: 'column-selection'+$index() }, checked: columnHeaderOption, checkedValue: seriesSpecifyOptions.byColumnName"/>
-<label>By Column Name</label>
+    <div>
+        <input type="radio" data-bind="attr:{name: 'column-selection'+$index(), id: 'col-specifier-' + seriesSpecifyOptions.byColumnName + $index() }, checked: columnHeaderOption, checkedValue: seriesSpecifyOptions.byColumnName"/>
+        <label class="clickable-label" data-bind="attr:{for: 'col-specifier-' + seriesSpecifyOptions.byColumnName + $index()}">By Column Name</label>
+    </div>
 
-</div>
-<div><input type="radio" data-bind="attr:{name: 'column-selection'+$index() }, checked: columnHeaderOption, checkedValue: seriesSpecifyOptions.byIndex"/>
-<label>By Index (0 - based)</label>
-</div>
+    <div data-bind="visible: columnHeaderOption() === seriesSpecifyOptions.byColumnName">
+        <div><label>X Column Header</label> <input type="search" data-bind="textInput: xColumnHeaderName"></div>
+        <div><label>Y Column Header</label> <input type="search" data-bind="textInput: yColumnHeaderName"></div>
+    </div>
 
+
+    <div>
+        <input type="radio" data-bind="attr:{name: 'column-selection'+$index(), id: 'col-specifier-' + seriesSpecifyOptions.byIndex + $index() }, checked: columnHeaderOption, checkedValue: seriesSpecifyOptions.byIndex"/>
+        <label class="clickable-label" data-bind="attr:{for: 'col-specifier-' + seriesSpecifyOptions.byIndex + $index()}">By Index (0 - based)</label>
+    </div>
+
+    <div><button data-bind="click: $parent.removePlot">Remove Plot</button></div>
 </div>
 </script>
 

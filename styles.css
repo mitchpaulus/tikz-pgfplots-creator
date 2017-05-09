@@ -5,6 +5,10 @@ button {
     cursor: pointer;
 }
 
+input[type="radio"] {
+    cursor: pointer;
+}
+
 body {
     font-family: Verdana;
 }
@@ -37,6 +41,12 @@ textarea {
 
 .clickable-label {
     cursor: pointer;
+}
+
+#page-description {
+    width: 70ex;
+    margin: 0 auto;
+    
 }
 
 

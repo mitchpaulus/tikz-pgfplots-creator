@@ -122,6 +122,14 @@ var addPlotTable = function () {
 
         optionArray.push("col sep=" + self.delimiter());
 
+        if (self.columnHeaderOption() === seriesSpecifyOptions.byColumnName) {
+            optionArray.push("x=" + self.xColumnHeaderName());
+            optionArray.push("y=" + self.yColumnHeaderName());
+        } else if (self.columnHeaderOption() === seriesSpecifyOptions.byIndex) {
+            optionArray.push("x index=" + self.xColumnIndex());
+            optionArray.push("y index=" + self.yColumnIndex());
+        }
+
         return optionArray;
     
     }); 
