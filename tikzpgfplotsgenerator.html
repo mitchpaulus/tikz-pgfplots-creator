@@ -157,7 +157,7 @@ This page serves as a helpful tool to create most simple 2-dimensional plots usi
 
 </div>
 <div>
-    <input  type="checkbox" data-bind="attr:{id: 'add-legend-entry'+$index()}, checked: commonPlotOptions.addLegendEntry">
+    <input type="checkbox" data-bind="attr:{id: 'add-legend-entry'+$index()}, checked: commonPlotOptions.addLegendEntry">
     <label class="clickable-label" data-bind="attr:{for:'add-legend-entry'+$index()}">Add legend entry?</label>
     <div data-bind="visible: commonPlotOptions.addLegendEntry">
         <label>Legend Entry Text:</label>
@@ -214,6 +214,11 @@ This page serves as a helpful tool to create most simple 2-dimensional plots usi
     <div>
         <input type="radio" data-bind="attr:{name: 'column-selection'+$index(), id: 'col-specifier-' + seriesSpecifyOptions.byIndex + $index() }, checked: columnHeaderOption, checkedValue: seriesSpecifyOptions.byIndex"/>
         <label class="clickable-label" data-bind="attr:{for: 'col-specifier-' + seriesSpecifyOptions.byIndex + $index()}">By Index (0 - based)</label>
+    </div>
+
+    <div data-bind="visible: columnHeaderOption() === seriesSpecifyOptions.byIndex">
+        <div> <label>X Index</label> <input type="number" min="0" data-bind="textInput: xColumnIndex"> </div>
+        <div> <label>Y Index</label> <input type="number" min="0" data-bind="textInput: yColumnIndex"> </div>
     </div>
 
     <div><button data-bind="click: $parent.removePlot">Remove Plot</button></div>
