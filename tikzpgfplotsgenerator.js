@@ -1,5 +1,11 @@
 const tikzgen = {
     defaultText: "default",
+};
+
+const specifyColumnValues = {
+    default: "default",
+    byColumnName: "byColumnName",
+    byIndex: "byIndex"
 }
 const delimiterOptions = ["space", "tab", "comma", "colon", "semicolon","braces","&","ampersand"];
 const markOptions = ["no marks", "*", "x", "+", "-", "|", "o",
@@ -50,6 +56,7 @@ const addLegendEntryLine = function(originalText, addLegendEntryBool, legendEntr
     }
     return originalText;
 }
+
 
 var commonPlotOptions = function () {
 
@@ -103,6 +110,12 @@ var addPlotTable = function () {
 
     self.commonPlotOptions = new commonPlotOptions();
 
+    self.columnHeaderOption = ko.observable(specifyColumnValues.default);
+    self.yColumnHeaderName = ko.observable("pressure");
+    self.xColumnHeaderName = ko.observable("temperature");
+
+    self.yColumnIndex = ko.observable("1");
+    self.xColumnIndex = ko.observable("0");
 
     self.options = ko.computed(function () {
         var optionArray = [];
@@ -118,22 +131,9 @@ var addPlotTable = function () {
 
         var output = "\\addplot[";
 
-        var addedOptions = self.commonPlotOptions.commonPlotOptionArray().reduce(function (accum, value, index, options) {
-            if (index === self.commonPlotOptions.commonPlotOptionArray().length-1){
-                return accum + value;
-            } else {
-                return accum + value + ", ";
-            }
-        }, output );
+        var addedOptions = output + self.commonPlotOptions.commonPlotOptionArray().join(", ");
 
-        var tableSpecificOptions = self.options().reduce(function (accum, value, index, options) {
-            if (index === self.options().length-1){
-                return accum + value;
-            } else {
-                return accum + value + ", ";
-            }
-            return accum + value + ", ";
-        }, "" );
+        var tableSpecificOptions = self.options().join(", ")
 
         var firstPlotLine =  `${addedOptions}] table[${tableSpecificOptions}]{${self.filename()}};\r\n`;
 
@@ -160,7 +160,7 @@ var mathSeries = function () {
     self.expression = ko.observable("x+1");
 
     self.ToOutput = ko.computed(function () {
-        var firstLine = "\\addplot[domain=" + self.minDomain() + ":" + self.maxDomain() + ", samples=" + self.samples() + "] {" + self.expression() + "};\r\n";
+        var firstLine = "\\addplot[" + self.commonPlotOptions.commonPlotOptionArray().join(", ")   + ", domain=" + self.minDomain() + ":" + self.maxDomain() + ", samples=" + self.samples() + "] {" + self.expression() + "};\r\n";
         return addLegendEntryLine(firstLine, self.commonPlotOptions.addLegendEntry(), self.commonPlotOptions.legendEntry()); 
     });
 
@@ -235,8 +235,8 @@ var axis = function () {
     self.options = ko.computed(function () {
         optionArray = [];
 
-        optionArray.push("x label={" + self.xLabel() + "}");
-        optionArray.push("y label={" + self.yLabel() + "}");
+        optionArray.push("xlabel={" + self.xLabel() + "}");
+        optionArray.push("ylabel={" + self.yLabel() + "}");
 
         if (self.allGrid()) {
             optionArray.push("grid")
@@ -280,13 +280,11 @@ var axis = function () {
 
 
     self.ToOutput = function () {
-        var output = "\\begin{axis}\r\n[\r\n";
+        var output = "\\begin{axis}\r\n[\r\n    ";
 
-        var addedOptions = self.options().reduce(function (accum, value, index, options) {
-            return accum + '    ' + value + ",\r\n";
-        }, output );
+        var addedOptions = output + self.options().join(", \r\n    ");
 
-        addedOptions = addedOptions + "]\r\n";
+        addedOptions = addedOptions + "\r\n]\r\n";
 
         self.plots().map(function (plot) {
             addedOptions = addedOptions + plot.ToOutput();

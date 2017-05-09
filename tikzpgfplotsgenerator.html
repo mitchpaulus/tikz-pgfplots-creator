@@ -175,9 +175,15 @@
     </select>
 <label>File name: </label> <input data-bind="textInput: filename"></input>
 
+<input type="radio" name="{name}"></input>
+
 
 <button data-bind="click: $parent.removePlot">Remove Plot</button>
 </div>
+<p>Specify columns</p>
+<div><input type="radio" data-bind="attr:{name: 'column-selection'+$index(), id: 'col-specifier-' + specifyColumnValues.default + $index(), value: specifyColumnValues.default}, checkedValue: columnHeaderOption"></input> <label data-bind="attr:{for: 'col-specifier-' + specifyColumnValues.default + $index()}">Default Convention</label></div>
+<div><input type="radio" data-bind="attr:{name: 'column-selection'+$index(),  value: specifyColumnValues.byColumnName}, checkedValue: columnHeaderOption"></input> <label>By Column Name</label></div>
+<div><input type="radio" data-bind="attr:{name: 'column-selection'+$index(), value: specifyColumnValues.byIndex}, checkedValue: columnHeaderOption, "></input> <label>By Index (0 - based)</label></div>
 </div>
 </script>
 
