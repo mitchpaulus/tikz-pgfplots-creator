@@ -41,7 +41,7 @@ This page serves as a helpful tool to create most simple 2-dimensional plots usi
         </div>
         <div>
             <input type="checkbox" data-bind="checked: setAxisLimits, attr:{id: 'set-axis-limits' + $index()}">
-            <label class="clickable-label"  data-bind="attr:{for: 'set-axis-limits' + $index()}">Set Axis Limits</label>
+            <label class="clickable-label"  data-bind="attr:{for: 'set-axis-limits' + $index()}">Set Axis Limits?</label>
 
             <div data-bind="visible: setAxisLimits">
                 <div><label>X Min</label> <input type="search" data-bind="textInput: xMin" ></div>
@@ -50,6 +50,13 @@ This page serves as a helpful tool to create most simple 2-dimensional plots usi
                 <div><label>Y Max</label> <input type="search" data-bind="textInput: yMax" ></div>
             </div>
 
+        </div>
+
+        <div>
+            <input type="checkbox" data-bind="attr:{id: 'set-tick-align'+$index()},checked: setTickAlignment"> <label class="clickable-label" data-bind="attr:{for: 'set-tick-align'+$index()}">Set tick alignment?</label>
+        </div>
+        <div data-bind="visible: setTickAlignment">
+            <select data-bind="options: tickAlignOptions, value: tickAlign"></select>
         </div>
 
         <h3>Legend Options</h3>

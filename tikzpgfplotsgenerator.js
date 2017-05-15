@@ -2,11 +2,13 @@ const tikzgen = {
     defaultText: "default",
 };
 
+const tickAlignOptions = ["inside","outside","center"];
+
 const seriesSpecifyOptions = {
     default: "default",
     byColumnName: "byColumnName",
     byIndex: "byIndex"
-}
+};
 const delimiterOptions = ["space", "tab", "comma", "colon", "semicolon","braces","&","ampersand"];
 const markOptions = ["no marks", "*", "x", "+", "-", "|", "o",
       "asterisk", "star", "10-pointed-star","oplus","oplus*",
@@ -239,6 +241,8 @@ var axis = function () {
     self.legendYCustomPos   = ko.observable("0.9");
     self.legendAnchor       = ko.observable("south");
 
+    self.setTickAlignment = ko.observable(false);
+    self.tickAlign = ko.observable(tickAlignOptions[0]);
 
     self.options = ko.computed(function () {
         optionArray = [];
@@ -273,7 +277,6 @@ var axis = function () {
             optionArray.push("axis lines=" + self.axisLineSetting());
         }
 
-
         if (self.showLegend()) {
            if (self.legendPosType() === "shorthand") {
                optionArray.push("legend pos=" + self.shorthandLegendPos());
@@ -281,6 +284,10 @@ var axis = function () {
            else if (self.legendPosType() === "custom") {
                optionArray.push("legend style={at={(" + self.legendXCustomPos() + "," + self.legendYCustomPos() + ")}, anchor=" + self.legendAnchor() + "}");
            }
+        }
+
+        if (self.setTickAlignment()) {
+            optionArray.push("tick align=" + self.tickAlign());
         }
 
         return optionArray;
