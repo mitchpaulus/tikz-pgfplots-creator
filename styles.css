@@ -55,6 +55,10 @@ textarea {
     cursor: pointer;
 }
 
+.clickable-label:hover {
+    background-color: lightgray;
+}
+
 #page-description {
     width: 70ex;
     margin: 0 auto;

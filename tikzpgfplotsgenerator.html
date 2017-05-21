@@ -32,16 +32,20 @@ This page serves as a helpful tool to create most simple 2-dimensional plots usi
         </div>
 
         <div>
-            <input type="checkbox" data-bind="checked: allGrid, attr: {id: 'axis-grid-' + $index()}">  
-            <label class="clickable-label" data-bind="attr:{for: 'axis-grid-' + $index()}">Include Grid?</label>  
+            <label class="clickable-label">
+                <input type="checkbox" data-bind="checked: allGrid">  
+                Include Grid?
+            </label>
         </div>
         <div>
-            <input type="checkbox" data-bind="checked: hideAllTicks, attr:{id: 'axis-ticks' + $index()}">  
-            <label class="clickable-label"  data-bind="attr:{for: 'axis-ticks' + $index()}">Hide all ticks?</label> 
+            <label class="clickable-label">
+                <input type="checkbox" data-bind="checked: hideAllTicks">  
+                Hide all ticks?</label> 
         </div>
         <div>
-            <input type="checkbox" data-bind="checked: setAxisLimits, attr:{id: 'set-axis-limits' + $index()}">
-            <label class="clickable-label"  data-bind="attr:{for: 'set-axis-limits' + $index()}">Set Axis Limits?</label>
+            <label class="clickable-label" >
+                <input type="checkbox" data-bind="checked: setAxisLimits">
+                Set Axis Limits?</label>
 
             <div data-bind="visible: setAxisLimits">
                 <div><label>X Min</label> <input type="search" data-bind="textInput: xMin" ></div>
@@ -53,7 +57,9 @@ This page serves as a helpful tool to create most simple 2-dimensional plots usi
         </div>
 
         <div>
-            <input type="checkbox" data-bind="attr:{id: 'set-tick-align'+$index()},checked: setTickAlignment"> <label class="clickable-label" data-bind="attr:{for: 'set-tick-align'+$index()}">Set tick alignment?</label>
+            <label class="clickable-label">
+                <input type="checkbox" data-bind="checked: setTickAlignment">
+                Set tick alignment?</label>
         </div>
         <div data-bind="visible: setTickAlignment">
             <select data-bind="options: tickAlignOptions, value: tickAlign"></select>
@@ -61,22 +67,27 @@ This page serves as a helpful tool to create most simple 2-dimensional plots usi
 
         <h3>Legend Options</h3>
         <div>
-            <input type="checkbox" data-bind="attr:{id: 'show-legend'+$index()}, checked: showLegend">
-            <label class="clickable-label"  data-bind="attr:{for: 'show-legend'+$index()}">Show Legend?</label>
+            <label class="clickable-label">
+                <input type="checkbox" data-bind="checked: showLegend">
+                Show Legend?</label>
         </div>
         <div data-bind="visible: showLegend">
             <div>
-                <input data-bind="attr:{name: 'legend-pos-radio'+$index(), id: 'legend-pos-radio-default'+$index()}, checked: legendPosType" value="default" type="radio">
-                <label class="clickable-label" data-bind="attr:{for: 'legend-pos-radio-default'+$index()}">Use default legend position</label>
+                <label class="clickable-label" >
+                    <input data-bind="attr:{name: 'legend-pos-radio'+$index()}, checked: legendPosType" value="default" type="radio">
+                    Use default legend position</label>
             </div>
             <div>
-                <input data-bind="attr:{name: 'legend-pos-radio'+$index(), id: 'legend-pos-radio-shorthand'+$index()}, checked: legendPosType" value="shorthand" type="radio">
-                <label class="clickable-label" data-bind="attr:{for: 'legend-pos-radio-shorthand'+$index()}">Use shorthand legend position</label>
+                <label class="clickable-label">
+                    <input data-bind="attr:{name: 'legend-pos-radio'+$index()}, checked: legendPosType" value="shorthand" type="radio">
+                    Use shorthand legend position</label>
             </div>
             <div> <select data-bind="options: legendPosOptions, visible: showLegend() && legendPosType() === 'shorthand', value: shorthandLegendPos"></select> </div>
 
             <div>
-                <input data-bind="attr:{name: 'legend-pos-radio'+$index(), id: 'legend-pos-radio-custom'+$index()}, checked: legendPosType" value="custom" type="radio"><label data-bind="attr:{for: 'legend-pos-radio-custom'+$index()}" class="clickable-label">Specify exact legend position</label>       
+                <label class="clickable-label">
+                    <input data-bind="attr:{name: 'legend-pos-radio'+$index()}, checked: legendPosType" value="custom" type="radio">
+                    Specify exact legend position</label>       
             </div>
             <div data-bind="visible: showLegend() && legendPosType() === 'custom'">
                 <p>Legend position (use axis coordinates 0-1)</p>
@@ -90,8 +101,9 @@ This page serves as a helpful tool to create most simple 2-dimensional plots usi
         <h3> Label Styles </h3>
 
         <div> 
-            <input type="checkbox" data-bind="checked: styleXLabel, attr:{id: 'axis-label-pos' + $index()}"> 
-            <label class="clickable-label"  data-bind="attr:{for: 'axis-label-pos' + $index()}">Set position on the axis in axis coordinates </label> 
+            <label class="clickable-label">
+            <input type="checkbox" data-bind="checked: styleXLabel"> 
+                Set position on the axis in axis coordinates </label> 
         </div>
         <div data-bind="visible: styleXLabel">
             <label>x label x-position</label><input type="search" data-bind="textInput: xLabelXLocation"> 
@@ -99,21 +111,23 @@ This page serves as a helpful tool to create most simple 2-dimensional plots usi
         </div>
 
         <div> 
-            <input type="checkbox" data-bind="checked: rotateYAxis, attr:{id: 'rotate-y-axis' + $index()}">  
-            <label class="clickable-label"  data-bind="attr:{for: 'rotate-y-axis' + $index()}">Rotate Y-Axis Label?</label> 
+            <label class="clickable-label">
+            <input type="checkbox" data-bind="checked: rotateYAxis">  
+                Rotate Y-Axis Label?</label> 
             <label data-bind="visible: rotateYAxis">Rotation angle:</label> <input type="search" data-bind="visible: rotateYAxis,  textInput: rotateYAxisAngle" >
         </div>
 
-        <div>
-            <input id="use-non-box-axis-lines" type="checkbox" data-bind="checked: useNonBoxAxis">
-            <label class="clickable-label"  for="use-non-box-axis-lines">Use non box axis?</label>
-            <select data-bind="visible: useNonBoxAxis, options: lineSettingOptions, value: axisLineSetting"> </select>
-        </div>
+            <div>
+                <label class="clickable-label">
+                <input type="checkbox" data-bind="checked: useNonBoxAxis">
+                    Use non box axis?</label>
+                <select data-bind="visible: useNonBoxAxis, options: lineSettingOptions, value: axisLineSetting"> </select>
+            </div>
 
 
-        <h2>Add Series</h2> 
-        <button data-bind="click: addTableSeries">Add a Series From a File or Table</button><button style="margin-left: 2em" data-bind="click: addMathSeries">Add a Series from Math Function</button>
-        <div class="plot" data-bind=" template: { foreach: plots, name: seriesTemplateName } "> </div>
+            <h2>Add Series</h2> 
+            <button data-bind="click: addTableSeries">Add a Series From a File or Table</button><button style="margin-left: 2em" data-bind="click: addMathSeries">Add a Series from Math Function</button>
+            <div class="plot" data-bind=" template: { foreach: plots, name: seriesTemplateName } "> </div>
 
     </div>
 
@@ -159,13 +173,15 @@ This page serves as a helpful tool to create most simple 2-dimensional plots usi
 
     <div class="optionRow">
         <div>
-            <input type="checkbox" name="smooth-plot" data-bind="attr:{id: 'smooth'+$index()},checked: commonPlotOptions.makeSmooth">
-            <label class="clickable-label" data-bind="attr:{for: 'smooth'+$index()}">Smooth Plot?</label> 
+            <label class="clickable-label">
+            <input type="checkbox" name="smooth-plot" data-bind="checked: commonPlotOptions.makeSmooth">
+                Smooth Plot?</label> 
         </div>
 
         <div>
-            <input type="checkbox" data-bind="attr:{id: 'add-legend-entry'+$index()}, checked: commonPlotOptions.addLegendEntry">
-            <label class="clickable-label" data-bind="attr:{for:'add-legend-entry'+$index()}">Add legend entry?</label>
+            <label class="clickable-label">
+            <input type="checkbox" data-bind="checked: commonPlotOptions.addLegendEntry">
+                Add legend entry?</label>
 
             <div data-bind="visible: commonPlotOptions.addLegendEntry">
                 <label>Legend Entry Text:</label>
@@ -208,14 +224,16 @@ This page serves as a helpful tool to create most simple 2-dimensional plots usi
     <p>Specify columns</p>
     <div>
 
-        <input type="radio" data-bind="attr:{name: 'column-selection'+$index(), id: 'col-specifier-' + seriesSpecifyOptions.default + $index() }, checked: columnHeaderOption, checkedValue: seriesSpecifyOptions.default"/>
-        <label class="clickable-label" data-bind="attr:{for: 'col-specifier-' + seriesSpecifyOptions.default + $index()}">Default Convention</label>
+        <label class="clickable-label">
+        <input type="radio" data-bind="attr:{name: 'column-selection'+$index()}, checked: columnHeaderOption, checkedValue: seriesSpecifyOptions.default"/>
+            Default Convention</label>
 
     </div>
 
     <div>
-        <input type="radio" data-bind="attr:{name: 'column-selection'+$index(), id: 'col-specifier-' + seriesSpecifyOptions.byColumnName + $index() }, checked: columnHeaderOption, checkedValue: seriesSpecifyOptions.byColumnName"/>
-        <label class="clickable-label" data-bind="attr:{for: 'col-specifier-' + seriesSpecifyOptions.byColumnName + $index()}">By Column Name</label>
+        <label class="clickable-label">
+        <input type="radio" data-bind="attr:{name: 'column-selection'+$index()}, checked: columnHeaderOption, checkedValue: seriesSpecifyOptions.byColumnName"/>
+            By Column Name</label>
     </div>
 
     <div data-bind="visible: columnHeaderOption() === seriesSpecifyOptions.byColumnName">
@@ -225,8 +243,9 @@ This page serves as a helpful tool to create most simple 2-dimensional plots usi
 
 
     <div>
-        <input type="radio" data-bind="attr:{name: 'column-selection'+$index(), id: 'col-specifier-' + seriesSpecifyOptions.byIndex + $index() }, checked: columnHeaderOption, checkedValue: seriesSpecifyOptions.byIndex"/>
-        <label class="clickable-label" data-bind="attr:{for: 'col-specifier-' + seriesSpecifyOptions.byIndex + $index()}">By Index (0 - based)</label>
+        <label class="clickable-label">
+        <input type="radio" data-bind="attr:{name: 'column-selection'+$index()}, checked: columnHeaderOption, checkedValue: seriesSpecifyOptions.byIndex"/>
+            By Index (0 - based)</label>
     </div>
 
     <div data-bind="visible: columnHeaderOption() === seriesSpecifyOptions.byIndex">
