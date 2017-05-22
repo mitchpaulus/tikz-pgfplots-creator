@@ -25,7 +25,7 @@ This page serves as a helpful tool to create most simple 2-dimensional plots usi
 <div id="left-column">
 
     <h2>Add Axis</h2>
-    <div data-bind="foreach: axes">
+    <div class="main-axis-div" data-bind="foreach: axes">
         <div>
             <div class="optionRow"><label>X Label</label> <input placeholder="temperature" data-bind="textInput: xLabel" type="search"></div> 
             <div class="optionRow"><label>Y Label</label> <input placeholder="pressure" data-bind="textInput: yLabel" type="search"></div> 
@@ -47,7 +47,7 @@ This page serves as a helpful tool to create most simple 2-dimensional plots usi
                 <input type="checkbox" data-bind="checked: setAxisLimits">
                 Set Axis Limits?</label>
 
-            <div data-bind="visible: setAxisLimits">
+            <div id="axis-limits" data-bind="visible: setAxisLimits">
                 <div><label>X Min</label> <input type="search" data-bind="textInput: xMin" ></div>
                 <div><label>X Max</label> <input type="search" data-bind="textInput: xMax" ></div>
                 <div><label>Y Min</label> <input type="search" data-bind="textInput: yMin" ></div>

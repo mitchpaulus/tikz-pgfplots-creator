@@ -29,6 +29,16 @@ textarea {
     font-family: monospace;
 }
 
+#axis-limits label {
+    padding-left: 2em;
+    display: inline-block;
+    width: 5em;
+}
+
+#axis-limits input {
+    width: 5em;
+}
+
 .series {
     border-bottom: thin;
     border-bottom-style: solid;
@@ -53,6 +63,9 @@ textarea {
 
 .clickable-label {
     cursor: pointer;
+    display: inline-block;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
 }
 
 .clickable-label:hover {
